@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('home') }}">Lion Buildings</a>
+        <ul class="nav navbar-nav">
+          {% if role == 'SuperAdmin' or role == 'Admin' %}
+            <li><a href="{{ path('catalog') }}">Catalogs</a></li>
+            <li class=""><a href="{{ path('installation') }}">Installation</a></li>
+          {% endif %}
+          <li><a href="{{ path('list') }}">Lists</a></li>
+        </ul>
+        <a class="btn btn-danger navbar-btn pull-right" href="{{ logout_path('main') }}">close sesion</a>  
+      <span class="pull-right li-user glyphicon glyphicon-user"> {{ user }}</span>  
+    </div>
+  </nav>
+
+
+  <div class="container">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Catalog</h3>
+      </div>
+      <div class="panel-body">
+        <center>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4"><a class="btn btn-info btn-lg btn-catalog shadow" href="{{ path('show_manufacturer') }}">Manufacturer</a></div>
+          <div class="col-sm-4"><a class="btn btn-info btn-lg btn-catalog shadow" href="{{ path('show_agent') }}">Agent</a></div>
+          <div class="col-sm-2"></div>        
+        </div>
+        </center>
+      </div>
+    </div>
+
+{% endblock %}

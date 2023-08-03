@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('home') }}">Lion Buildings</a>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{{ path('catalog') }}">Catalogs</a></li>
+        <li><a href="{{ path('installation') }}">Installation</a></li>
+        <li><a href="{{ path('list') }}">Lists</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="container">
+  <a class="btn btn-primary pull-left glyphicon glyphicon-chevron-left" href="{{ path('catalog') }}" data-toggle="tooltip" data-placement="top" title="Hooray!"></a>
+  <a class="btn btn-info pull-right glyphicon glyphicon-plus" data-toggle="tooltip" title="Add new Agent" href="{{ path('new_agent') }}" ></a><br><br>
+    <div class="panel panel-default">
+      <div class="panel-heading panel-heading-green">
+        <h3 class="panel-title">Agents Available</h3>
+      </div>
+      <div class="panel-body">
+        <center>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agent in agent %}
+                    <tr>
+                      <th scope="row">{{ agent.id }}</th>
+                      <th scope="row">{{ agent.name }}</th>
+                      <th scope="row">{{ agent.email }}</th>
+                        <td>
+                            <a href="{{ path("delete_agent", {"id": agent.id}) }}" class="btn btn-danger glyphicon glyphicon-remove-circle" data-toggle="tooltip" data-placement="top" title="Turn off"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </center>
+      </div>
+    </div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading panel-heading-red">
+        <h3 class="panel-title">Agents not Available</h3>
+      </div>
+      <div class="panel-body">
+        <center>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i_agent in i_agent %}
+                    <tr>
+                      <th scope="row">{{ i_agent.id }}</th>
+                      <th scope="row">{{ i_agent.name }}</th>
+                        <td>
+                            <a href="{{ path("activate_agent", {"id": i_agent.id}) }}" class="btn btn-success glyphicon glyphicon-ok-circle" data-toggle="tooltip" data-placement="top" title="Turn on"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </center>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

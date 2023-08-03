@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<style>
+            body {
+                background-image: url("https://cdn.pixabay.com/photo/2017/08/30/12/23/black-2696879_640.jpg");
+            }
+</style>
+
+<title>Login</title>
+<div class="container login shadow" >
+  <div class="row">
+    <div class="col-sm-6"><center><img src="https://lionbuildings.com/wp-content/uploads/2019/09/LION-BUILDINGS.png" class="image-login"></center></div>
+    <div class="col-sm-6">
+      <form class="form-signin" action="{{ path('login') }}" method="POST">
+        <h2 class="form-signin-heading"><center>Login</center></h2>
+        <label for="_username" class="space-t">Username:</label>
+        <input type="text" id="_username" name="_username" class="form-control" placeholder="Username" required autofocus>
+
+        <label for="_password" class="space-t">Password</label>
+        <input type="password" id="_password" name="_password" class="form-control" placeholder="Password" required><br><br>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button><br><br>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

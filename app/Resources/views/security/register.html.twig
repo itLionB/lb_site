@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('resources/css/style_login.css') }}" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}
+            <center>
+            <h1 class="form-signin space-t space-mb">Formulario para registro de un nuevo usuario</h1>
+            <div class="container space-mt space-t">
+                {{ form(registration_form) }}
+            </div>
+            </center>
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

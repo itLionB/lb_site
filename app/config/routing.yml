@@ -1,0 +1,125 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+contact:
+    path:     /contact
+    defaults: { _controller: AppBundle:Contact:index }
+
+new_contact:
+    path:     /new_contact
+    defaults: { _controller: AppBundle:Contact:addContact }
+
+view_contact:
+    path:     /view_contact/{id}
+    defaults: { _controller: AppBundle:Contact:viewContact, id: "" }
+
+edit_contact:
+    path:     /edit_contact/{id}
+    defaults: { _controller: AppBundle:Contact:editContact, id: "" }
+
+delete_contact:
+    path:     /delete_contact/{id}
+    defaults: { _controller: AppBundle:Contact:deleteContact, id: "" }
+
+home_contact:
+    path:     /home_contact
+    defaults: { _controller: AppBundle:Default:home_Contact }
+
+
+my_options:
+    path:     /my_options
+    defaults: { _controller: AppBundle:Default:myOptions }
+
+catalog:
+    path: /catalog
+    defaults: { _controller: AppBundle:Catalog:index }
+
+show_agent:
+    path: /show_agent
+    defaults: { _controller: AppBundle:Catalog:showAgent }
+
+new_agent:
+    path: /new_agent
+    defaults: { _controller: AppBundle:Catalog:addAgent }
+
+
+delete_agent:
+    path: /delete_agent/{id}
+    defaults: { _controller: AppBundle:Catalog:deleteAgent }
+
+activate_agent:
+    path: /activate_agent/{id}
+    defaults: { _controller: AppBundle:Catalog:activateAgent }
+
+show_manufacturer:
+    path: /show_manufacturer
+    defaults: { _controller: AppBundle:Catalog:showManufacturer }
+
+new_manufacturer:
+    path: /new_manufacturer
+    defaults: { _controller: AppBundle:Catalog:addManufacturer }
+
+
+
+
+installation:
+    path: /installation
+    defaults: { _controller: AppBundle:Installation:index }
+
+list:
+    path: /list
+    defaults: { _controller: AppBundle:List:index }
+
+home:
+    path: /home
+    defaults: { _controller: AppBundle:Default:myOptions }
+
+
+
+add_installation:
+    path: /add_installation
+    defaults: { _controller: AppBundle:Installation:addInstallation }
+
+info_installation:
+    path: /info_installation/{id}
+    defaults: { _controller: AppBundle:Installation:showDetails }
+
+edit_customer:
+    path: /edit_customer/{id}
+    defaults: { _controller: AppBundle:Installation:editCustomer }
+
+edit_installation_info:
+    path: /edit_installation_info/{id}
+    defaults: { _controller: AppBundle:Installation:editInstallationInfo }
+
+edit_balance_info:
+    path: /edit_balance_info/{id}
+    defaults: { _controller: AppBundle:Installation:editBalanceInfo }
+
+add_owners:
+    path: /add_owners/{id}
+    defaults: { _controller: AppBundle:Installation:addOwners }
+
+edit_sensei_info:
+    path: /edit_sensei_info/{id}
+    defaults: { _controller: AppBundle:Installation:editSenseiInfo }
+
+edit_changes_info:
+    path: /edit_changes_info/{id}
+    defaults: { _controller: AppBundle:Installation:editChangesInfo }
+
+edit_manufacturer_info:
+    path: /edit_manufacturer_info/{id}
+    defaults: { _controller: AppBundle:Installation:editManufacturerInfo }
+
+edit_extra_info:
+    path: /edit_extra_info/{id}
+    defaults: { _controller: AppBundle:Installation:editExtraInfo }
+
+hot_pending:
+    path: /hot_pending
+    defaults: { _controller: AppBundle:List:hotPending }
+
+
+

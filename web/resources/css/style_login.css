@@ -1,0 +1,24 @@
+.container_l{
+    margin-top: 40px;
+}
+.form-signin{
+    max-width: 400px;
+    margin: 0 auto;
+}
+.label-login{
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+.space-t{
+    margin-top: 20px;
+}
+.space-mt{
+    margin: auto 50%;
+}
+.space-mb{
+    margin-bottom: 20px;
+}
+.close-s{
+    font-size: 20px;
+}

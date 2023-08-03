@@ -1,0 +1,195 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Installation{% endblock %}
+
+{% block body %}
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('home') }}">Lion Buildings</a>
+        <ul class="nav navbar-nav">
+          {% if role == 'SuperAdmin' or role == 'Admin' %}
+            <li><a href="{{ path('catalog') }}">Catalogs</a></li>
+            <li class=""><a href="{{ path('installation') }}">Installation</a></li>
+          {% endif %}
+          <li><a href="{{ path('list') }}">Lists</a></li>
+        </ul>
+        <a class="btn btn-danger navbar-btn pull-right" href="{{ logout_path('main') }}">close sesion</a>  
+      <span class="pull-right li-user glyphicon glyphicon-user"> {{ user }}</span>  
+    </div>
+  </nav>
+
+  <div class="container text-center">
+    <br><a href=" {{ path("installation") }} " class="btn btn-info pull-left">Back</a><br><br>
+  </div>  
+  <img src="https://lionbuildings.com/wp-content/uploads/2019/09/LION-BUILDINGS.png" class="img-responsive center-block" alt="Lion Buildings" width="300" height="300">
+  <h2><p class="text-center">Installations Details</p></h2>
+  
+  <div class="container-fluid text-center">    
+    <div class="row content">
+      <div class="col-sm-2 sidenav">
+        <div class="panel panel-primary">
+          <a href="{{ path('edit_customer', {'id': installation.id}) }}" class="btn btn-warning glyphicon glyphicon-pencil pull-right"></a>
+          <div class="panel-heading ">
+            <h3 class="panel-title">Customer Data</h3>
+          </div>
+          <div class="panel-body">
+            <p>Customer Name:<h5>{{installation.customerName}}</h5></p>
+            <p>Customer Phone:<h5>{{installation.customerPhone}}</h5></p>
+            <p>Customer Email:<h5>{{installation.customerEmail}}</h5></p><hr>
+            <h4>Changes Applied:</h4>
+            {% for modification in modification %}
+              <div class="well">
+                <p>By User:</p>
+                <h4>{{modification.userId}}</h4>
+                <p>Date:</p>
+                <h4>{{modification.modificationDate|date('d-m-Y')}}</h4>
+                <p>Change on:</p>
+                <h4>{{modification.placeChanged}}</h4>
+              </div> 
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-8 text-left"> 
+        <div class="panel panel-default ">
+          <a href="{{ path('edit_installation_info', {'id': installation.id}) }}" class="btn btn-warning glyphicon glyphicon-pencil pull-right"></a>
+          <div class="panel-heading panel-heading-lightblue">
+            <h3 class="panel-title">Information About Installation</h3>
+          </div>
+          <div class="panel-body">
+            <ul class = "list-group">
+              <li class = "list-group-item">Installation Address: <h4>{{installation.installationAddress}}</h4></li>
+              <li class = "list-group-item">City: <h4>{{installation.city}}</h4></li>
+              <li class = "list-group-item">State: <h4>{{installation.State}}</h4></li>
+              <li class = "list-group-item">Zipcode: <h4>{{installation.zipcode}}</h4></li>
+              <li class = "list-group-item">Description: <h>{{installation.description}}</h4></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel panel-default ">
+          {% if role == 'SuperAdmin' or role == 'Admin' %}
+          <a href="{{ path('edit_balance_info', {'id': installation.id}) }}" class="btn btn-warning glyphicon glyphicon-pencil pull-right"></a>
+          {% endif %}
+          <div class="panel-heading panel-heading-lightgreen">
+            <h3 class="panel-title">Payment Information</h3>
+          </div>
+          <div class="panel-body">
+            <ul class = "list-group">
+              <li class = "list-group-item">Price with taxes: <h4>$ {{installation.buildingPiTaxes}}</h4></li>
+              <li class = "list-group-item">Price no taxes: <h4>$ {{installation.priceNtax}}</h4></li>
+              <li class = "list-group-item">Downpayment: <h4>$ {{installation.downpayment}}</h4></li>
+              <li class = "list-group-item">DP Method: <h4>{{installation.dpMethod}}</h4></li>
+              <li class = "list-group-item">DP Date: <h4>{{installation.dpDate|date('d-m-Y')}}</h4></li>
+              <li class = "list-group-item">Payment 2: <h4>$ {{installation.payment2}}</h4></li>
+              <li class = "list-group-item">DP Method 2: <h4>{{installation.payment2Method}}</h4></li>
+              <li class = "list-group-item">DP Date 2: <h4>{{installation.payment2Date|date('d-m-Y')}}</h4></li>
+              <li class = "list-group-item">Balance Due upon installation: <h4>$ {{installation.balanceDuInstallation}}</h4></li>
+              <li class = "list-group-item">Financed: <h4> {{installation.financed}}</h4></li>
+              <li class = "list-group-item">Financing Company: <h4> {{installation.financingCompany}}</h4></li>
+              <li class = "list-group-item">Other: <h4> {{installation.financingOther}}</h4></li>
+              
+
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel panel-default ">
+          {% if  installation.salesCaller is null or installation.salesOwner is null  %}
+            <a href="{{ path('add_owners', {'id': installation.id}) }}" class="btn btn-success pull-right">Añadir Owners</a>
+          {% endif %}
+          <a href="{{ path('edit_sensei_info', {'id': installation.id}) }}" class="btn btn-warning glyphicon glyphicon-pencil pull-right"></a>
+          <div class="panel-heading panel-heading-yellow">
+            <h3 class="panel-title">Sensei Details</h3>
+          </div>
+          <div class="panel-body">
+            <ul class = "list-group">
+              <li class = "list-group-item">Owner: <h4>{{installation.salesOwner}}</h4></li>
+              <li class = "list-group-item">Caller: <h4>{{installation.salesCaller}}</h4></li>
+              <li class = "list-group-item">Added as Lead: <h4>{{installation.addedLead|date('d-m-Y')}}</h4></li>
+              <li class = "list-group-item">Quoted: <h4>{{installation.quoted|date('d-m-Y')}}</h4></li>
+              <li class = "list-group-item">Contract Signed: <h4>{{installation.contractSigned|date('d-m-Y')}}</h4></li>
+              <li class = "list-group-item">Notes on Sensei: <h4>{{installation.notesSensei}}</h4></li>
+              <li class = "list-group-item">Quote Number: <h4>{{installation.quoteNumber}}</h4></li>
+              <li class = "list-group-item">Order Number: <h4>{{installation.orderNumber}}</h4></li>
+              <li class = "list-group-item">Invoice Number: <h4>{{installation.invoiceNumber}}</h4></li>
+              <li class = "list-group-item">Total calls before payments: <h4>{{installation.callsBeforePayments}}</h4></li>
+              <li class = "list-group-item">Total texts before payments: <h4>{{installation.textsBeforePayments}}</h4></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel panel-default ">
+          <a href="{{ path('edit_changes_info', {'id': installation.id}) }}" class="btn btn-warning glyphicon glyphicon-pencil pull-right"></a>
+          <div class="panel-heading panel-heading-orange">
+            <h3 class="panel-title">Order Stage</h3>
+          </div>
+          <div class="panel-body">
+            <ul class = "list-group">
+              <li class = "list-group-item">Any Changes?: {{ installation.anyChanges }} <h4></h4></li>
+              <li class = "list-group-item">Order Confirmation date: {{ installation.orderConfirmation|date('d-m-Y') }} <h4></h4></li>
+              <li class = "list-group-item">Confirmation agent: {{ installation.confirmationAgent }} <h4></h4></li>
+              <li class = "list-group-item">Sites Specifics: {{ installation.siteSpecifics }} <h4></h4></li>
+            </ul>
+          </div>
+        </div> 
+
+        <div class="panel panel-default ">
+          {% if installation.anyChanges == 'No' or installation.anyChanges == null  %}
+            {% if role == 'SuperAdmin' or role == 'Admin' %}
+            <a href="{{ path('edit_manufacturer_info', {'id': installation.id}) }}" class="btn btn-warning glyphicon glyphicon-pencil pull-right"></a>
+            {% endif %}
+          {% endif %} 
+          <div class="panel-heading panel-heading-brown">
+            <h3 class="panel-title">Manufacturer details</h3>
+          </div>
+          <div class="panel-body">
+            <ul class = "list-group">
+              <li class = "list-group-item">Sent-to Manufacturer Date: <h4>{{ installation.toManufacturer|date('d-m-Y') }}</h4></li>
+              <li class = "list-group-item">Installation Company: <h4>{{ installation.installationCompany }}</h4></li>
+              <li class = "list-group-item">Manufacturer Phone: <h4>{{ installation.manufacturerNumber }}</h4></li>
+              <li class = "list-group-item">Manufacturer Email: <h4>{{ installation.manufacturerEmail }}</h4></li>
+              <li class = "list-group-item">Installation Status: <h4>{{ installation.installationStatus }}</h4></li>
+              <li class = "list-group-item">Installation Date: <h4>{{ installation.installationDate|date('d-m-Y') }}</h4></li>
+              <li class = "list-group-item">Days to Customer: <h4>{{ installation.daysCustomer }}</h4></li>
+              <li class = "list-group-item">Days to Install: <h4>{{ installation.daysInstall }}</h4></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel panel-default ">
+          <a href="{{ path('edit_extra_info', {'id': installation.id}) }}" class="btn btn-warning glyphicon glyphicon-pencil pull-right"></a>
+          <div class="panel-heading panel-heading-red2">
+            <h3 class="panel-title">Extra</h3>
+          </div>
+          <div class="panel-body">
+            <li class = "list-group-item">Links and Info: <h4>{{ installation.linksInfo }}</h4></li>
+            <li class = "list-group-item">Review Link: <h4>{{ installation.reviewLink }}</h4></li>
+            <li class = "list-group-item">Notes: <h4>{{ installation.notes }}</h4></li>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-2 sidenav">
+        <center>
+        <div class="well">
+          <p>Status</p>
+          <h2>Active</h2>
+        </div>
+        <div class="well">
+          <p>Created on</p>
+          <h2>{{installation.registerCreated|date('d-m-Y')}}</h2>
+        </div>        
+        <div class="well">
+          <p>Status Hot</p>
+          {% if  installation.hotStatus == 'Yes' %}
+              <span class="glyphicon glyphicon glyphicon-fire"></span>
+            {% endif %}
+        </div>
+        </center>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{{% extends 'base.html.twig' %}}
+{% block title %}Installation{% endblock %}
+
+{% block body %}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+      <a class="navbar-brand" href="{{ path('home') }}">Lion Buildings</a>
+    <ul class="nav navbar-nav">
+      <li><a href="{{ path('catalog') }}">Catalogs</a></li>
+      <li class="active"><a href="{{ path('installation') }}">Installation</a></li>
+      <li><a href="{{ path('list') }}">Lists</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+{{% endblock %}}
