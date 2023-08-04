@@ -22,8 +22,16 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function get()
+    public function getMissingConfirmation()
     {
-        
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.orderConfirmation is Null'
+            )
+            ->getResult();
     }
+
+
 }
