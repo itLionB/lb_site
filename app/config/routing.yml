@@ -121,5 +121,8 @@ hot_pending:
     path: /hot_pending
     defaults: { _controller: AppBundle:List:hotPending }
 
+show_dashboard:
+    path: /show_dashboard
+    defaults: { _controller: AppBundle:List:showDashboard }
 
 

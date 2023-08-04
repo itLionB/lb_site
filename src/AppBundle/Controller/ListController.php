@@ -30,6 +30,22 @@ class ListController extends Controller
             'user' => $user
         ));
     }
+
+    public function showDashboardAction()
+    {
+        $user = $this->getUser()->getUserName();
+        $roleApp = $this->getUser()->getRoleApp();
+        $installations = $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getMissingConfirmation();
+        $installationsCount = count($installations);
+        return $this->render('List/Tables/Dashboard.html.twig', array(
+            'role' => $roleApp,
+            'user' => $user,
+            'installation' => $installations,
+            'installationCount' => $installationsCount
+        ));
+    }
     
     
 }
