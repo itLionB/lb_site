@@ -22,6 +22,99 @@
             background: rgb(230,230,230);
             background: linear-gradient(90deg, rgba(230,230,230,1) 0%, rgba(163,163,163,1) 0%, rgba(255,255,255,1) 50%, rgba(147,147,147,1) 100%);
         }
+        .panel-default > .panel-heading-lightgreen {
+                background: rgb(215, 215, 100);
+                color: #fff;
+            }
+        .panel-default > .panel-heading-red {
+                background: #E74C3C; 
+                color: #fff;
+        }
+        .panel-default > .panel-heading-green {
+            background: green;
+            color: #fff;
+        }
+        .panel-default > .panel-heading-lightgreen {
+            background: rgb(215, 215, 100);
+            color: #fff;
+        }
+        .panel-default > .panel-heading-lightblue {
+            background: rgb(0, 170, 239);
+            color: #fff;
+        }
+        .panel-default > .panel-heading-purple {
+            background-color: #8E44AD;
+            color: #fff;
+        }
+        .panel-default > .panel-heading-blue {
+            background: rgb(0, 57, 230);
+            color: #fff;
+        }            
+        .panel-default > .panel-heading-yellow {
+            background: rgb(228, 191, 9);
+            color: #fff;
+        }
+        .panel-default > .panel-heading-orange {
+            background: rgb(255, 165, 0);
+            color: #fff;
+        }
+        .panel-default > .panel-heading-brown {
+            background: rgb(189,88, 66);
+            color: #fff;
+        }
+        .panel-default > .panel-heading-red2 {
+            background: rgb(160, 0, 0);
+            color: #fff;
+        }
+        .btn-warning {
+            background-color: gray !important;
+            border-color: black !important;
+        }
+        #missingConfirmation {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        #missingConfirmation.hide {
+            opacity: 0;
+        }
+
+        #nullManufacturer {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        #nullManufacturer.hide {
+            opacity: 0;
+        }
+
+        #stpeNoOrdered {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        #stpeNoOrdered.hide {
+            opacity: 0;
+        }
+
+        #hotPending {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        #hotPending.hide {
+            opacity: 0;
+        }
+
+        #siteSpecifics {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        #siteSpecifics.hide {
+            opacity: 0;
+        }
+        
     </style>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -43,72 +136,72 @@
         <div class="container bootstrap snippet">
             <div class="row">
 
-                <div class="col-lg-2 col-sm-6">
+                <div class="col-lg-2 col-sm-6" onclick="missingConfirmation()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content blue">
                             <div class="circle-tile-description text-faded"> Missing Confirmation</div>
-                            <div class="circle-tile-number text-faded ">{{ installationCount }}</div>
-                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                            <div class="circle-tile-number text-faded ">{{ installation|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
      
-                <div class="col-lg-2 col-sm-6">
+                <div class="col-lg-2 col-sm-6 " onclick="nullManufacturer()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content orange">
                             <div class="circle-tile-description text-faded"> Orders not sent to manufacturer </div>
-                            <div class="circle-tile-number text-faded ">120</div>
-                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                            <div class="circle-tile-number text-faded ">{{ nullManufacturer|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
                 </div>  
 
-                <div class="col-lg-2 col-sm-6">
+                <div class="col-lg-2 col-sm-6" onclick="siteSpecifics()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content red">
                             <div class="circle-tile-description text-faded">Require sites specifics drawings? </div>
-                            <div class="circle-tile-number text-faded ">17</div>
-                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                            <div class="circle-tile-number text-faded ">{{ siteSpecifics|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
                 </div>  
 
-                <div class="col-lg-2 col-sm-6">
+                <div class="col-lg-2 col-sm-6" onclick="stpeNoOrdered()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content purple">
                             <div class="circle-tile-description text-faded"> Sites specific not ordered </div>
-                            <div class="circle-tile-number text-faded ">2</div>
-                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                            <div class="circle-tile-number text-faded ">{{ stpeNoOrdered|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info<i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
                 </div> 
 
-                <div class="col-lg-2 col-sm-6">
+                <div class="col-lg-2 col-sm-6" onclick="hd1()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content yellow">
                             <div class="circle-tile-description text-faded"> Customers without Installation Date </div>
-                            <div class="circle-tile-number text-faded ">13</div>
-                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                            <div class="circle-tile-number text-faded ">{{ nullDateInstallation|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info<i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-2 col-sm-6">
+                <div class="col-lg-2 col-sm-6" onclick="hd1()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content green">
                             <div class="circle-tile-description text-faded">Installations delayed </div>
                             <div class="circle-tile-number text-faded ">90</div>
-                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info <i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-2 col-sm-6">
+                <div class="col-lg-2 col-sm-6" onclick="hotPending()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content green-s">
                             <div class="circle-tile-description text-faded">Hot Installations</div>
-                            <div class="circle-tile-number text-faded ">30</div>
-                            <a class="circle-tile-footer"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+                            <div class="circle-tile-number text-faded ">{{ hotPending|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info <i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -117,63 +210,299 @@
         </div>  
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-            <div class="modal-body">
-
-    <div class="panel panel-primary "> 
-      <div class="panel-heading ">
-        <h3 class="panel-title">Installations</h3>
-      </div>
-      <div class="panel-body">
-        <center>
-          <table id="datatable" class="table table-hover">
-              <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Customer Name</th>
-                    <th scope="col">Customer Phone</th>
-                    <th scope="col">Added as Lead</th>
-                    <th scope="col">Created On</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-              </thead>
-            <tbody>
-              {% for installation in installation %}
-                <tr>
-                  <th scope="row">{{ installation.customerName }}</th>
-                  <th scope="row">{{ installation.customerPhone }}</th>
-                  <th scope="row">{{ installation.addedLead|date("m/d/Y") }}</th>
-                  <th scope="row">{{ installation.registerCreated|date("m/d/Y") }}</th>
-                  <td>
-                    <a href="{{ path("edit_changes_info", {"id": installation.id}) }}" class="btn btn-success">Add Missing Confirmation</a>
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </center>
-      </div>
-    </div>
+    <div class='container hide' id="missingConfirmation">
+        <div class="panel panel-primary "> 
+            <div class="panel-heading ">
+                <h3 class="panel-title">Missing Confirmation</h3>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="panel-body">
+                <center>
+                <table id="datatable" class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Phone</th>
+                            <th scope="col">Added as Lead</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for installation in installation %}
+                        <tr>
+                        <th scope="row">{{ installation.customerName }}</th>
+                        <th scope="row">{{ installation.customerPhone }}</th>
+                        <th scope="row">{{ installation.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ installation.registerCreated|date("m/d/Y") }}</th>
+                        <td>
+                            <a href="{{ path("edit_changes_info", {"id": installation.id}) }}" class="btn btn-success">Add Missing Confirmation</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </center>
             </div>
         </div>
     </div>
 
+    <div class='container hide' id="nullManufacturer">
+        <div class="panel panel-default "> 
+            <div class="panel-heading panel-heading-orange">
+                <h3 class="panel-title">No manufacturer assigned</h3>
+            </div>
+            <div class="panel-body">
+                <center>
+                <table id="datatable" class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Phone</th>
+                            <th scope="col">Added as Lead</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for nullManufacturer in nullManufacturer %}
+                        <tr>
+                        <th scope="row">{{ nullManufacturer.customerName }}</th>
+                        <th scope="row">{{ nullManufacturer.customerPhone }}</th>
+                        <th scope="row">{{ nullManufacturer.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ nullManufacturer.registerCreated|date("m/d/Y") }}</th>
+                        <td>
+                            <a href="{{ path("info_installation", {"id": nullManufacturer.id}) }}" class="btn btn-success">Add manufacturer</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </center>
+            </div>
+        </div>
+    </div>
+
+    <div class='container hide' id="hotPending">
+        <div class="panel panel-default "> 
+            <div class="panel-heading panel-heading-green">
+                <h3 class="panel-title">Hot Pending</h3>
+            </div>
+            <div class="panel-body">
+                <center>
+                <table id="datatable" class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Phone</th>
+                            <th scope="col">Added as Lead</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for hotPending in hotPending %}
+                        <tr>
+                        <th scope="row">{{ hotPending.customerName }}</th>
+                        <th scope="row">{{ hotPending.customerPhone }}</th>
+                        <th scope="row">{{ hotPending.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ hotPending.registerCreated|date("m/d/Y") }}</th>
+                        <td>
+                            <a href="{{ path("info_installation", {"id": hotPending.id}) }}" class="btn btn-success">View more information</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </center>
+            </div>
+        </div>
+    </div>
   
+    <div class='container hide' id="siteSpecifics">
+        <div class="panel panel-default "> 
+            <div class="panel-heading panel-heading-red">
+                <h3 class="panel-title">Require Site Specifics</h3>
+            </div>
+            <div class="panel-body">
+                <center>
+                <table id="datatable" class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Phone</th>
+                            <th scope="col">Added as Lead</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for siteSpecifics in siteSpecifics %}
+                        <tr>
+                        <th scope="row">{{ siteSpecifics.customerName }}</th>
+                        <th scope="row">{{ siteSpecifics.customerPhone }}</th>
+                        <th scope="row">{{ siteSpecifics.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ siteSpecifics.registerCreated|date("m/d/Y") }}</th>
+                        <td>
+                            <a href="{{ path("info_installation", {"id": siteSpecifics.id}) }}" class="btn btn-success">View more information</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </center>
+            </div>
+        </div>
+    </div>
+
+    <div class='container hide' id="stpeNoOrdered">
+        <div class="panel panel-default"> 
+            <div class="panel-heading panel-heading-purple">
+                <h3 class="panel-title">Site Specifics Not Ordered</h3>
+            </div>
+            <div class="panel-body">
+                <center>
+                <table id="datatable" class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Phone</th>
+                            <th scope="col">Added as Lead</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for siteSpecifics in siteSpecifics %}
+                        <tr>
+                        <th scope="row">{{ siteSpecifics.customerName }}</th>
+                        <th scope="row">{{ siteSpecifics.customerPhone }}</th>
+                        <th scope="row">{{ siteSpecifics.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ siteSpecifics.registerCreated|date("m/d/Y") }}</th>
+                        <td>
+                            <a href="{{ path("info_installation", {"id": siteSpecifics.id}) }}" class="btn btn-success">View more information</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </center>
+            </div>
+        </div>
+    </div>  
 
   {% block javascripts %}
     <script>
-        $(document).ready(function() {
-            $('#datatable').dataTable();
-        } );
+        function missingConfirmation() {
+        var x = document.getElementById("missingConfirmation");
+        var nullManufacturer = document.getElementById("nullManufacturer");
+        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
+        var hotPending = document.getElementById("hotPending");
+        var siteSpecifics = document.getElementById("siteSpecifics");
+        if (x.classList.contains("hide")) {
+        x.classList.remove("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        } else {
+        x.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        }
+    }
+    function nullManufacturer() {
+        var x = document.getElementById("nullManufacturer");
+        var missingConfirmation = document.getElementById("missingConfirmation");
+        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
+        var hotPending = document.getElementById("hotPending");
+        var siteSpecifics = document.getElementById("siteSpecifics");
+    
+        if (x.classList.contains("hide")) {
+        x.classList.remove("hide");
+        missingConfirmation.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        } else {
+        x.classList.add("hide");
+        missingConfirmation.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        }
+    }
+    function stpeNoOrdered() {
+        var x = document.getElementById("stpeNoOrdered");
+        var missingConfirmation = document.getElementById("missingConfirmation");
+        var nullManufacturer = document.getElementById("nullManufacturer");
+        var hotPending = document.getElementById("hotPending");
+        var siteSpecifics = document.getElementById("siteSpecifics");
+
+        if (x.classList.contains("hide")) {
+        x.classList.remove("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        } else {
+        x.classList.add("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        }
+    }
+    function hotPending() {
+        var x = document.getElementById("hotPending");
+        var missingConfirmation = document.getElementById("missingConfirmation");
+        var nullManufacturer = document.getElementById("nullManufacturer");
+        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
+        var siteSpecifics = document.getElementById("siteSpecifics");
+
+        if (x.classList.contains("hide")) {
+        x.classList.remove("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        } else {
+        x.classList.add("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        }
+    }
+    function siteSpecifics() {
+        var x = document.getElementById("siteSpecifics");
+        var missingConfirmation = document.getElementById("missingConfirmation");
+        var nullManufacturer = document.getElementById("nullManufacturer");
+        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
+        var hotPending = document.getElementById("hotPending");
+        if (x.classList.contains("hide")) {
+        x.classList.remove("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        } else {
+        x.classList.add("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        }
+    }
+    function hd1() {
+        var x = document.getElementById("dv1");
+        if (x.classList.contains("hide")) {
+        x.classList.remove("hide");
+        } else {
+        x.classList.add("hide");
+        }
+    }
     </script>
   {% endblock %}
 {% endblock %}
