@@ -33,5 +33,67 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function getManufacturerNull()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.installationCompany is Null'
+            )
+            ->getResult();
+    }
+
+    public function getSiteSpecifics()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.siteSpecifics = :status'
+            )
+            ->setParameter('status', 'Yes')
+            ->getResult();
+    }
+
+    public function getNullDateInstallation()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.installationDate is Null
+                OR i.installationDate = :status'
+            )
+            ->setParameter('status', '2018-01-01')
+            ->getResult();
+    }
+
+    public function getHotPending()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.hotStatus = :status'            )
+            ->setParameter('status', 'Yes')
+            ->getResult();
+    }
+
+    public function getSiteSpecificsNoOrdered()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.stepOrdered =:stpeord
+                AND i.installationStatus =:status'
+            )
+            ->setParameters([
+                'stpeord' => 'No',
+                'status' => 'Pending'
+            ])
+            ->getResult();
+    }
 
 }

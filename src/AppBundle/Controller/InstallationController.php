@@ -119,6 +119,8 @@ class InstallationController extends Controller
             $installation = $form->getData();
 
             $installation->setRegisterCreated(new \DateTime('now'));
+            $installation->setInstallationStatus('Pending');
+            //$installation->setInstallationDate('2000-01-01');
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($installation);

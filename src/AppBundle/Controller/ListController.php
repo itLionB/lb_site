@@ -38,12 +38,36 @@ class ListController extends Controller
         $installations = $this->getDoctrine()
             ->getRepository('AppBundle:Installation')
             ->getMissingConfirmation();
-        $installationsCount = count($installations);
+
+        $nullManufacturer = $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getManufacturerNull();
+
+        $siteSpecifics = $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getSiteSpecifics();
+
+        $nullDateInstallation = $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getNullDateInstallation();
+
+        $hotPending= $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getHotPending();
+
+        $stpeNoOrdered = $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getSiteSpecificsNoOrdered();
+
         return $this->render('List/Tables/Dashboard.html.twig', array(
             'role' => $roleApp,
             'user' => $user,
             'installation' => $installations,
-            'installationCount' => $installationsCount
+            'nullManufacturer' => $nullManufacturer,
+            'hotPending' => $hotPending,
+            'siteSpecifics' => $siteSpecifics,
+            'nullDateInstallation' => $nullDateInstallation,
+            'stpeNoOrdered' => $stpeNoOrdered
         ));
     }
     

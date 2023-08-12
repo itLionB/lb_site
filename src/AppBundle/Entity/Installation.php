@@ -375,6 +375,13 @@ class Installation
     private $createdBy;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="step_ordered", type="string", nullable=true)
+     */
+    private $stepOrdered;
+
+    /**
      * Get id
      *
      * @return int
@@ -1582,5 +1589,29 @@ class Installation
     public function getCreatedBy()
     {
         return $this->createdBy;
+    }
+
+    /**
+     * Set stepOrdered
+     *
+     * @param string $stepOrdered
+     *
+     * @return Installation
+     */
+    public function setStepOrdered($stepOrdered)
+    {
+        $this->stepOrdered = $stepOrdered;
+
+        return $this;
+    }
+
+    /**
+     * Get stepOrdered
+     *
+     * @return string
+     */
+    public function getStepOrdered()
+    {
+        return $this->stepOrdered;
     }
 }
