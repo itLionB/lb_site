@@ -28,7 +28,7 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT i
                 FROM AppBundle:Installation i
-                WHERE i.orderConfirmation is Null'
+                WHERE i.confirmationAgent is Null'
             )
             ->getResult();
     }
@@ -39,8 +39,10 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT i
                 FROM AppBundle:Installation i
-                WHERE i.installationCompany is Null'
+                WHERE i.installationCompany is Null
+                OR i.installationCompany = :status'
             )
+            ->setParameter('status', 'TBD')
             ->getResult();
     }
 

@@ -1590,4 +1590,28 @@ class Installation
     {
         return $this->createdBy;
     }
+
+    /**
+     * Set stepOrdered
+     *
+     * @param string $stepOrdered
+     *
+     * @return Installation
+     */
+    public function setStepOrdered($stepOrdered)
+    {
+        $this->stepOrdered = $stepOrdered;
+
+        return $this;
+    }
+
+    /**
+     * Get stepOrdered
+     *
+     * @return string
+     */
+    public function getStepOrdered()
+    {
+        return $this->stepOrdered;
+    }
 }
