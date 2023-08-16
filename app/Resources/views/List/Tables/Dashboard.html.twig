@@ -66,6 +66,10 @@
             background: rgb(160, 0, 0);
             color: #fff;
         }
+        .panel-default > .panel-heading-yellow {
+            background-color: #F1C40F;
+            color: #fff;
+        }
         .btn-warning {
             background-color: gray !important;
             border-color: black !important;
@@ -114,6 +118,16 @@
         #siteSpecifics.hide {
             opacity: 0;
         }
+
+        #nullDateInstallation {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        #nullDateInstallation.hide {
+            opacity: 0;
+        }
+        
         
     </style>
     <nav class="navbar navbar-inverse">
@@ -177,7 +191,7 @@
                     </div>
                 </div> 
 
-                <div class="col-lg-2 col-sm-6" onclick="hd1()">
+                <div class="col-lg-2 col-sm-6" onclick="nullDateInstallation()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content yellow">
                             <div class="circle-tile-description text-faded"> Customers without Installation Date </div>
@@ -191,7 +205,7 @@
                     <div class="circle-tile ">
                         <div class="circle-tile-content green">
                             <div class="circle-tile-description text-faded">Installations delayed </div>
-                            <div class="circle-tile-number text-faded ">90</div>
+                            <div class="circle-tile-number text-faded ">-</div>
                             <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info <i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
@@ -391,10 +405,51 @@
         </div>
     </div>  
 
+    <div class='container hide' id="nullDateInstallation">
+        <div class="panel panel-default"> 
+            <div class="panel-heading panel-heading-yellow">
+                <h3 class="panel-title">Null Installation Date</h3>
+            </div>
+            <div class="panel-body">
+                <center>
+                <table id="datatable" class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Phone</th>
+                            <th scope="col">Added as Lead</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for nullDateInstallation in nullDateInstallation %}
+                        <tr>
+                        <th scope="row">{{ nullDateInstallation.customerName }}</th>
+                        <th scope="row">{{ nullDateInstallation.customerPhone }}</th>
+                        <th scope="row">{{ nullDateInstallation.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ nullDateInstallation.registerCreated|date("m/d/Y") }}</th>
+                        <td>
+                            <a href="{{ path("info_installation", {"id": nullDateInstallation.id}) }}" class="btn btn-success">View more information</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </center>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
   {% block javascripts %}
+  
     <script>
-        function missingConfirmation() {
-        var x = document.getElementById("missingConfirmation");
+        function nullDateInstallation() {
+        var x = document.getElementById("nullDateInstallation");
         var nullManufacturer = document.getElementById("nullManufacturer");
         var stpeNoOrdered = document.getElementById("stpeNoOrdered");
         var hotPending = document.getElementById("hotPending");
@@ -411,6 +466,29 @@
         stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        }
+    }
+        function missingConfirmation() {
+        var x = document.getElementById("missingConfirmation");
+        var nullManufacturer = document.getElementById("nullManufacturer");
+        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
+        var hotPending = document.getElementById("hotPending");
+        var siteSpecifics = document.getElementById("siteSpecifics");
+        var nullDateInstallation = document.getElementById("nullDateInstallation");
+        if (x.classList.contains("hide")) {
+        x.classList.remove("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
+        } else {
+        x.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         }
     }
     function nullManufacturer() {
@@ -419,19 +497,21 @@
         var stpeNoOrdered = document.getElementById("stpeNoOrdered");
         var hotPending = document.getElementById("hotPending");
         var siteSpecifics = document.getElementById("siteSpecifics");
-    
+        var nullDateInstallation = document.getElementById("nullDateInstallation");
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
         missingConfirmation.classList.add("hide");
         stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         } else {
         x.classList.add("hide");
         missingConfirmation.classList.add("hide");
         stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         }
     }
     function stpeNoOrdered() {
@@ -440,6 +520,7 @@
         var nullManufacturer = document.getElementById("nullManufacturer");
         var hotPending = document.getElementById("hotPending");
         var siteSpecifics = document.getElementById("siteSpecifics");
+        var nullDateInstallation = document.getElementById("nullDateInstallation");
 
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
@@ -447,12 +528,14 @@
         nullManufacturer.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         } else {
         x.classList.add("hide");
         missingConfirmation.classList.add("hide");
         nullManufacturer.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         }
     }
     function hotPending() {
@@ -461,6 +544,7 @@
         var nullManufacturer = document.getElementById("nullManufacturer");
         var stpeNoOrdered = document.getElementById("stpeNoOrdered");
         var siteSpecifics = document.getElementById("siteSpecifics");
+        var nullDateInstallation = document.getElementById("nullDateInstallation");
 
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
@@ -468,12 +552,14 @@
         nullManufacturer.classList.add("hide");
         stpeNoOrdered.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         } else {
         x.classList.add("hide");
         missingConfirmation.classList.add("hide");
         nullManufacturer.classList.add("hide");
         stpeNoOrdered.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         }
     }
     function siteSpecifics() {
