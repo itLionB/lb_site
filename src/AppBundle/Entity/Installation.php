@@ -380,6 +380,13 @@ class Installation
      * @ORM\Column(name="step_ordered", type="string", nullable=true)
      */
     private $stepOrdered;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="installation_date_set", type="string", nullable=true)
+     */
+    private $installationDateSet;
 
     /**
      * Get id
@@ -1613,5 +1620,29 @@ class Installation
     public function getStepOrdered()
     {
         return $this->stepOrdered;
+    }
+
+    /**
+     * Set installationDateSet
+     *
+     * @param string $installationDateSet
+     *
+     * @return Installation
+     */
+    public function setInstallationDateSet($installationDateSet)
+    {
+        $this->installationDateSet = $installationDateSet;
+
+        return $this;
+    }
+
+    /**
+     * Get installationDateSet
+     *
+     * @return string
+     */
+    public function getInstallationDateSet()
+    {
+        return $this->installationDateSet;
     }
 }

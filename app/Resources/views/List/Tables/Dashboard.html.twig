@@ -125,6 +125,7 @@
                 <li class=""><a href="{{ path('installation') }}">Installation</a></li>
             {% endif %}
             <li><a href="{{ path('list') }}">Lists</a></li>
+            <li><a href="{{ path('show_dashboard') }}">Dashboard</a></li>
             </ul>
             <a class="btn btn-danger navbar-btn pull-right" href="{{ logout_path('main') }}">close sesion</a>  
         <span class="pull-right li-user glyphicon glyphicon-user"> {{ user }}</span>  
@@ -372,14 +373,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for siteSpecifics in siteSpecifics %}
+                    {% for stpeNoOrdered in stpeNoOrdered %}
                         <tr>
-                        <th scope="row">{{ siteSpecifics.customerName }}</th>
-                        <th scope="row">{{ siteSpecifics.customerPhone }}</th>
-                        <th scope="row">{{ siteSpecifics.addedLead|date("m/d/Y") }}</th>
-                        <th scope="row">{{ siteSpecifics.registerCreated|date("m/d/Y") }}</th>
+                        <th scope="row">{{ stpeNoOrdered.customerName }}</th>
+                        <th scope="row">{{ stpeNoOrdered.customerPhone }}</th>
+                        <th scope="row">{{ stpeNoOrdered.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ stpeNoOrdered.registerCreated|date("m/d/Y") }}</th>
                         <td>
-                            <a href="{{ path("info_installation", {"id": siteSpecifics.id}) }}" class="btn btn-success">View more information</a>
+                            <a href="{{ path("info_installation", {"id": stpeNoOrdered.id}) }}" class="btn btn-success">View more information</a>
                         </td>
                         </tr>
                     {% endfor %}

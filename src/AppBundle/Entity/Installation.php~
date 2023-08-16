@@ -380,6 +380,13 @@ class Installation
      * @ORM\Column(name="step_ordered", type="string", nullable=true)
      */
     private $stepOrdered;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="installation_date_set", type="string", nullable=true)
+     */
+    private $installationDateSet;
 
     /**
      * Get id

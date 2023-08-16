@@ -125,4 +125,23 @@ show_dashboard:
     path: /show_dashboard
     defaults: { _controller: AppBundle:List:showDashboard }
 
+change_hot_not:
+    path: /change_hot_not/{id}
+    defaults: { _controller: AppBundle:Installation:changeHotNot }
+
+change_hot_yes:
+    path: /change_hot_yes/{id}
+    defaults: { _controller: AppBundle:Installation:changeHotYes }
+
+change_status_installed:
+    path: /change_status_installed/{id}
+    defaults: { _controller: AppBundle:Installation:changeStatusInstalled }
+
+change_status_pending:
+    path: /change_status_pending/{id}
+    defaults: { _controller: AppBundle:Installation:changeStatusPending }
+
+change_status_cancelled:
+    path: /change_status_cancelled/{id}
+    defaults: { _controller: AppBundle:Installation:changeStatusCancelled }
 

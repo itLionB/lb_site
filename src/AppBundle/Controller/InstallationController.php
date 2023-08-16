@@ -120,6 +120,7 @@ class InstallationController extends Controller
 
             $installation->setRegisterCreated(new \DateTime('now'));
             $installation->setInstallationStatus('Pending');
+            $installation->setCreatedBy($this->getUser()->getUserName());
             //$installation->setInstallationDate('2000-01-01');
 
             $em = $this->getDoctrine()->getManager();
@@ -947,6 +948,182 @@ class InstallationController extends Controller
             'form' => $form->createView(),
             'installation' => $installation
         ));
+    }
+
+    public function changeHotNotAction($id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        $installation->setHotStatus('No');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($installation);
+        $em->flush();
+
+        $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+
+        $roleApp = $this->getUser()->getRoleApp();
+        $user = $this->getUser()->getUserName();
+
+        $modification = new Modification();
+        
+        $modification->setUserId($this->getUser()->getUserName());
+        $modification->setInstallationId($installation->getId());
+        $modification->setPlaceChanged('Hot Status to No');
+        $modification->setModificationDate(new \DateTime('now'));
+
+        $em->persist($modification);
+        $em->flush();
+
+        return $this->render('Installation/Tables/Info.html.twig',[
+            'installation' => $installation,
+            'modification' => $modification,
+            'role' => $roleApp,
+            'user' => $user,
+            'layout' => $layout
+            ]
+        );
+    }
+
+    public function changeHotYesAction($id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        $installation->setHotStatus('Yes');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($installation);
+        $em->flush();
+
+        $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+
+        $roleApp = $this->getUser()->getRoleApp();
+        $user = $this->getUser()->getUserName();
+
+        $modification = new Modification();
+        
+        $modification->setUserId($this->getUser()->getUserName());
+        $modification->setInstallationId($installation->getId());
+        $modification->setPlaceChanged('Hot Status to Yes');
+        $modification->setModificationDate(new \DateTime('now'));
+
+        $em->persist($modification);
+        $em->flush();
+
+        return $this->render('Installation/Tables/Info.html.twig',[
+            'installation' => $installation,
+            'modification' => $modification,
+            'role' => $roleApp,
+            'user' => $user,
+            'layout' => $layout
+            ]
+        );
+    }
+
+    public function changeStatusInstalledAction($id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        $installation->setInstallationStatus('Installed');
+        $installation->setHotStatus('No');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($installation);
+        $em->flush();
+
+        $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+        
+        $roleApp = $this->getUser()->getRoleApp();
+        $user = $this->getUser()->getUserName();
+
+        $modification = new Modification();
+
+        $modification->setUserId($this->getUser()->getUserName());
+        $modification->setInstallationId($installation->getId());
+        $modification->setPlaceChanged('Status to Installed');
+        $modification->setModificationDate(new \DateTime('now'));
+
+        $em->persist($modification);
+        $em->flush();
+
+        return $this->render('Installation/Tables/Info.html.twig',[
+            'installation' => $installation,
+            'modification' => $modification,
+            'role' => $roleApp,
+            'user' => $user,
+            'layout' => $layout
+            ]
+        );
+    }
+
+    public function changeStatusPendingAction($id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        $installation->setInstallationStatus('Pending');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($installation);
+        $em->flush();
+
+        $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+        
+        $roleApp = $this->getUser()->getRoleApp();
+        $user = $this->getUser()->getUserName();
+
+        $modification = new Modification();
+
+        $modification->setUserId($this->getUser()->getUserName());
+        $modification->setInstallationId($installation->getId());
+        $modification->setPlaceChanged('Status to Pending');
+        $modification->setModificationDate(new \DateTime('now'));
+
+        $em->persist($modification);
+        $em->flush();
+
+        return $this->render('Installation/Tables/Info.html.twig',[
+            'installation' => $installation,
+            'modification' => $modification,
+            'role' => $roleApp,
+            'user' => $user,
+            'layout' => $layout
+            ]
+        );
+    }
+
+    public function changeStatusCancelledAction($id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        $installation->setInstallationStatus('Cancelled');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($installation);
+        $em->flush();
+
+        $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+        
+        $roleApp = $this->getUser()->getRoleApp();
+        $user = $this->getUser()->getUserName();
+
+        $modification = new Modification();
+
+        $modification->setUserId($this->getUser()->getUserName());
+        $modification->setInstallationId($installation->getId());
+        $modification->setPlaceChanged('Status to Cancelled');
+        $modification->setModificationDate(new \DateTime('now'));
+
+        $em->persist($modification);
+        $em->flush();
+
+        return $this->render('Installation/Tables/Info.html.twig',[
+            'installation' => $installation,
+            'modification' => $modification,
+            'role' => $roleApp,
+            'user' => $user,
+            'layout' => $layout
+            ]
+        );
     }
 
 

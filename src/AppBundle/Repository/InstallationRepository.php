@@ -64,10 +64,13 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT i
                 FROM AppBundle:Installation i
-                WHERE i.installationDate is Null
-                OR i.installationDate = :status'
+                WHERE i.installationDateSet =:instDate
+                OR i.installationStatus = :status'
             )
-            ->setParameter('status', '2018-01-01')
+            ->setParameters([
+                'instDate' => 'No',
+                'status' => 'Pending Install'
+            ])
             ->getResult();
     }
 
@@ -89,11 +92,13 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT i
                 FROM AppBundle:Installation i
                 WHERE i.stepOrdered =:stpeord
-                AND i.installationStatus =:status'
+                AND i.installationStatus =:status
+                AND i.siteSpecifics =:site'
             )
             ->setParameters([
                 'stpeord' => 'No',
-                'status' => 'Pending'
+                'status' => 'Pending Install',
+                'site' => 'Yes'
             ])
             ->getResult();
     }
