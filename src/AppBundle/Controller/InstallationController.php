@@ -1283,7 +1283,7 @@ class InstallationController extends Controller
 
         $modification->setUserId($this->getUser()->getUserName());
         $modification->setInstallationId($installation->getId());
-        $modification->setPlaceChanged('Status to Cancelled');
+        $modification->setPlaceChanged('Status to Pending to Install');
         $modification->setModificationDate(new \DateTime('now'));
 
         $em->persist($modification);
