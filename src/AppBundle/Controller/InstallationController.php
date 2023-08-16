@@ -121,6 +121,7 @@ class InstallationController extends Controller
             $installation->setRegisterCreated(new \DateTime('now'));
             $installation->setInstallationStatus('Pending');
             $installation->setCreatedBy($this->getUser()->getUserName());
+            $installation->setInstallationDateSet('No');
             //$installation->setInstallationDate('2000-01-01');
 
             $em = $this->getDoctrine()->getManager();
@@ -711,6 +712,18 @@ class InstallationController extends Controller
                     )
                 )
             )
+            ->add('stepOrdered', ChoiceType::class, array(
+                'label' => 'Site Especific Ordered?',
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Yes' => 'Yes',
+                    'No' => 'No'
+                    ),
+                'attr' => array(
+                    'class' => 'form-control',
+                    )
+                )
+            )
             ->add('save', SubmitType::class,
                 array(
                     'label' => 'Edit Changes Info',
@@ -763,6 +776,7 @@ class InstallationController extends Controller
     public function editManufacturerInfoAction(Request $request, $id)
     {
         $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+        $installationDateOld = $installation->getInstallationDate();
 
         $form = $this->createFormBuilder($installation)
             ->add('toManufacturer', DateType::class, array(
@@ -802,20 +816,6 @@ class InstallationController extends Controller
                     )
                 )
             )
-            ->add('daysCustomer', TextType::class, array(
-                'attr' => array(
-                    'class' => 'form-control',
-                    'placeholder' => 'Days Customer'
-                    )
-                )
-            )
-            ->add('daysInstall', TextType::class, array(
-                'attr' => array(
-                    'class' => 'form-control',
-                    'placeholder' => 'Days Install'
-                    )
-                )
-            )
             ->add('save', SubmitType::class,
                 array(
                     'label' => 'Edit Manufacturer Info',
@@ -835,6 +835,10 @@ class InstallationController extends Controller
             $installation->setInstallationCompany($manufacturer->getName());
             $installation->setmanufacturerNumber($manufacturer->getNumber());
             $installation->setManufacturerEmail($manufacturer->getEmail());
+            if ($installationDateOld != $installation->getInstallationDate()) 
+            {
+                $installation->setInstallationDateSet('Yes');
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($installation);
@@ -863,6 +867,103 @@ class InstallationController extends Controller
                 'user' => $user
                 ]
             );
+        }
+
+        return $this->render('Installation/Forms/EditInfo.html.twig', array(
+            'form' => $form->createView(),
+            'installation' => $installation
+        ));
+    }
+
+    public function editManufacturerInfoDashAction(Request $request, $id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+        $installationDateOld = $installation->getInstallationDate();
+
+        $form = $this->createFormBuilder($installation)
+            ->add('toManufacturer', DateType::class, array(
+                'widget' => 'choice',
+                'attr' => array(
+                    'class' => 'form-control datepicker',
+                    'id' => 'datetimepicker1'
+                    )
+                )
+            )
+            ->add('installationCompany', EntityType::class, array(
+                'class' => 'AppBundle:Manufacturer',
+                'choice_label' => 'name',
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('installationStatus',ChoiceType::class, array(
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Installed' => 'Installed',
+                    'Pending install' => 'Pending install',
+                    'Cancelled' => 'Cancelled',
+                    'Pending Drawings' => 'Pending Drawings',
+                    ),
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('installationDate', DateType::class, array(
+                'widget' => 'choice',
+                'attr' => array(
+                    'class' => 'form-control datepicker',
+                    'id' => 'datetimepicker1'
+                    )
+                )
+            )
+            ->add('save', SubmitType::class,
+                array(
+                    'label' => 'Edit Manufacturer Info',
+                    'attr' => array(
+                        'class' => 'btn btn-success mt-3 pull-right'
+                        )
+                    )
+            )
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $installation = $form->getData();
+
+            $manufacturer = $this->getDoctrine()->getRepository('AppBundle:Manufacturer')->find($installation->getInstallationCompany());
+            $installation->setInstallationCompany($manufacturer->getName());
+            $installation->setmanufacturerNumber($manufacturer->getNumber());
+            $installation->setManufacturerEmail($manufacturer->getEmail());
+            $installationDateNew = $installation->getInstallationDate();
+            if ($installationDateOld != $installationDateNew ) 
+            {
+                $installation->setInstallationDateSet('Yes');
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($installation);
+            $em->flush();
+
+            $modification = new Modification();
+
+            $modification->setUserId($this->getUser()->getUserName());
+            $modification->setPlaceChanged('Manufacturer Info');
+            $modification->setModificationDate(new \DateTime('now'));
+            $modification->setInstallationId($installation->getId());
+
+            $em->persist($modification);
+            $em->flush();
+
+            $modifications = $this->getDoctrine()->getRepository('AppBundle:Modification')->getModificationsByInstallationId($installation->getId());
+
+            $modifications = $this->getDoctrine()->getRepository('AppBundle:Modification')->getModificationsByInstallationId($installation->getId());
+            $userRole = $this->getUser()->getRoleApp();
+            $user = $this->getUser()->getUserName();
+
+            return $this->redirectToRoute('show_dashboard');
         }
 
         return $this->render('Installation/Forms/EditInfo.html.twig', array(
@@ -1126,5 +1227,74 @@ class InstallationController extends Controller
         );
     }
 
+    public function changeStatusHoldAction($id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        $installation->setInstallationStatus('Hold');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($installation);
+        $em->flush();
+
+        $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+        
+        $roleApp = $this->getUser()->getRoleApp();
+        $user = $this->getUser()->getUserName();
+
+        $modification = new Modification();
+
+        $modification->setUserId($this->getUser()->getUserName());
+        $modification->setInstallationId($installation->getId());
+        $modification->setPlaceChanged('Status to Hold');
+        $modification->setModificationDate(new \DateTime('now'));
+
+        $em->persist($modification);
+        $em->flush();
+
+        return $this->render('Installation/Tables/Info.html.twig',[
+            'installation' => $installation,
+            'modification' => $modification,
+            'role' => $roleApp,
+            'user' => $user,
+            'layout' => $layout
+            ]
+        );   
+    }
+
+    public function changeStatusPendingInstallAction($id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        $installation->setInstallationStatus('Pending to Install');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($installation);
+        $em->flush();
+
+        $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+        
+        $roleApp = $this->getUser()->getRoleApp();
+        $user = $this->getUser()->getUserName();
+
+        $modification = new Modification();
+
+        $modification->setUserId($this->getUser()->getUserName());
+        $modification->setInstallationId($installation->getId());
+        $modification->setPlaceChanged('Status to Cancelled');
+        $modification->setModificationDate(new \DateTime('now'));
+
+        $em->persist($modification);
+        $em->flush();
+
+        return $this->render('Installation/Tables/Info.html.twig',[
+            'installation' => $installation,
+            'modification' => $modification,
+            'role' => $roleApp,
+            'user' => $user,
+            'layout' => $layout
+            ]
+        );
+    }
 
 }   

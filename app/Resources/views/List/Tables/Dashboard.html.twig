@@ -286,7 +286,7 @@
                         <th scope="row">{{ nullManufacturer.addedLead|date("m/d/Y") }}</th>
                         <th scope="row">{{ nullManufacturer.registerCreated|date("m/d/Y") }}</th>
                         <td>
-                            <a href="{{ path("info_installation", {"id": nullManufacturer.id}) }}" class="btn btn-success">Add manufacturer</a>
+                            <a href="{{ path("edit_manufacturer_info_dash", {"id": nullManufacturer.id}) }}" class="btn btn-success">Add manufacturer</a>
                         </td>
                         </tr>
                     {% endfor %}
@@ -430,7 +430,7 @@
                         <th scope="row">{{ nullDateInstallation.addedLead|date("m/d/Y") }}</th>
                         <th scope="row">{{ nullDateInstallation.registerCreated|date("m/d/Y") }}</th>
                         <td>
-                            <a href="{{ path("info_installation", {"id": nullDateInstallation.id}) }}" class="btn btn-success">View more information</a>
+                            <a href="{{ path("edit_manufacturer_info_dash", {"id": nullDateInstallation.id}) }}" class="btn btn-success">Add Date Info</a>
                         </td>
                         </tr>
                     {% endfor %}

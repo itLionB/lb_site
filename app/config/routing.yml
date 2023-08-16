@@ -113,6 +113,10 @@ edit_manufacturer_info:
     path: /edit_manufacturer_info/{id}
     defaults: { _controller: AppBundle:Installation:editManufacturerInfo }
 
+edit_manufacturer_info_dash:
+    path: /edit_manufacturer_info_dash/{id}
+    defaults: { _controller: AppBundle:Installation:editManufacturerInfoDash }
+
 edit_extra_info:
     path: /edit_extra_info/{id}
     defaults: { _controller: AppBundle:Installation:editExtraInfo }
@@ -144,4 +148,12 @@ change_status_pending:
 change_status_cancelled:
     path: /change_status_cancelled/{id}
     defaults: { _controller: AppBundle:Installation:changeStatusCancelled }
+
+change_status_hold:
+    path: /change_status_hold/{id}
+    defaults: { _controller: AppBundle:Installation:changeStatusHold }
+
+change_status_pending_install:
+    path: /change_status_pending_install/{id}
+    defaults: { _controller: AppBundle:Installation:changeStatusPendingInstall }
 

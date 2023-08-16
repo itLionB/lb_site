@@ -249,6 +249,8 @@
             <li><a href="{{ path('change_status_installed', {'id': installation.id}) }}">Installed</a></li>
             <li><a href="{{ path('change_status_pending', {'id': installation.id}) }}">Pending</a></li>
             <li><a href="{{ path('change_status_cancelled', {'id': installation.id}) }}">Cancelled</a></li>
+            <li><a href="{{ path('change_status_hold', {'id': installation.id}) }}">Hold</a></li>
+            <li><a href="{{ path('change_status_pending_install', {'id': installation.id}) }}">Pending to Install</a></li>
           </ul>
         </div>
         </div>
