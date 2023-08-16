@@ -799,9 +799,10 @@ class InstallationController extends Controller
                 'choices' => array(
                     'Select an Option' => null,
                     'Installed' => 'Installed',
-                    'Pending install' => 'Pending install',
+                    'Pending to install' => 'Pending to install',
+                    'Pending' => 'Pending',
+                    'Hold' => 'Hold',
                     'Cancelled' => 'Cancelled',
-                    'Pending Drawings' => 'Pending Drawings',
                     ),
                 'attr' => array(
                     'class' => 'form-control'
@@ -901,9 +902,10 @@ class InstallationController extends Controller
                 'choices' => array(
                     'Select an Option' => null,
                     'Installed' => 'Installed',
-                    'Pending install' => 'Pending install',
+                    'Pending to install' => 'Pending to install',
+                    'Pending' => 'Pending',
+                    'Hold' => 'Hold',
                     'Cancelled' => 'Cancelled',
-                    'Pending Drawings' => 'Pending Drawings',
                     ),
                 'attr' => array(
                     'class' => 'form-control'
