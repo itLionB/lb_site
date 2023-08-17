@@ -70,6 +70,14 @@
             background-color: #F1C40F;
             color: #fff;
         }
+        .panel-default > .panel-heading-gray {
+            background-color: gray;
+            color: #fff;
+        }
+        .panel-default > .panel-heading-coral {
+            background-color: coral;
+            color: #fff;
+        }
         .btn-warning {
             background-color: gray !important;
             border-color: black !important;
@@ -134,6 +142,15 @@
         }
 
         #onHold.hide {
+            opacity: 0;
+        }
+
+        #pendingToInstall {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        #pendingToInstall.hide {
             opacity: 0;
         }
         
@@ -246,7 +263,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-2 col-sm-6" onclick="()">
+                <div class="col-lg-2 col-sm-6" onclick="pendingToInstall()">
                     <div class="circle-tile ">
                         <div class="circle-tile-content coral">
                             <div class="circle-tile-description text-faded">Pending Install</div>
@@ -478,7 +495,7 @@
 
     <div class='container hide' id="onHold">
         <div class="panel panel-default"> 
-            <div class="panel-heading panel-heading-purple">
+            <div class="panel-heading panel-heading-gray">
                 <h3 class="panel-title">On Hold</h3>
             </div>
             <div class="panel-body">
@@ -512,9 +529,9 @@
         </div>
     </div> 
 
-    <div class='container hide' id="stpeNoOrdered">
+    <div class='container hide' id="pendingToInstall">
         <div class="panel panel-default"> 
-            <div class="panel-heading panel-heading-purple">
+            <div class="panel-heading panel-heading-coral">
                 <h3 class="panel-title">Pending to Install</h3>
             </div>
             <div class="panel-body">
@@ -530,14 +547,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for stpeNoOrdered in stpeNoOrdered %}
+                    {% for pendingToInstall in pendingToInstall %}
                         <tr>
-                        <th scope="row">{{ stpeNoOrdered.customerName }}</th>
-                        <th scope="row">{{ stpeNoOrdered.customerPhone }}</th>
-                        <th scope="row">{{ stpeNoOrdered.addedLead|date("m/d/Y") }}</th>
-                        <th scope="row">{{ stpeNoOrdered.registerCreated|date("m/d/Y") }}</th>
+                        <th scope="row">{{ pendingToInstall.customerName }}</th>
+                        <th scope="row">{{ pendingToInstall.customerPhone }}</th>
+                        <th scope="row">{{ pendingToInstall.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ pendingToInstall.registerCreated|date("m/d/Y") }}</th>
                         <td>
-                            <a href="{{ path("info_installation", {"id": stpeNoOrdered.id}) }}" class="btn btn-success">View more information</a>
+                            <a href="{{ path("info_installation", {"id": pendingToInstall.id}) }}" class="btn btn-success">View more information</a>
                         </td>
                         </tr>
                     {% endfor %}
@@ -547,10 +564,6 @@
             </div>
         </div>
     </div> 
-
-
-
-
 
   {% block javascripts %}
   
@@ -563,6 +576,7 @@
         var siteSpecifics = document.getElementById("siteSpecifics");
         var missingConfirmation = document.getElementById("missingConfirmation");
         var onHold = document.getElementById("onHold");
+        var pendingToInstall = document.getElementById("pendingToInstall");
 
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
@@ -572,6 +586,7 @@
         siteSpecifics.classList.add("hide");
         missingConfirmation.classList.add("hide");
         onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         } else {
         x.classList.add("hide");
         nullManufacturer.classList.add("hide");
@@ -580,6 +595,7 @@
         siteSpecifics.classList.add("hide");
         missingConfirmation.classList.add("hide");
         onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         }
     }
         function missingConfirmation() {
@@ -590,6 +606,7 @@
         var siteSpecifics = document.getElementById("siteSpecifics");
         var nullDateInstallation = document.getElementById("nullDateInstallation");
         var onHold = document.getElementById("onHold");
+        var pendingToInstall = document.getElementById("pendingToInstall");
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
         nullManufacturer.classList.add("hide");
@@ -598,6 +615,7 @@
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
         onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         } else {
         x.classList.add("hide");
         nullManufacturer.classList.add("hide");
@@ -606,30 +624,39 @@
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
         onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         }
         console.log("Fuck Checo");
     }
     function nullManufacturer() {
         var x = document.getElementById("nullManufacturer");
         var missingConfirmation = document.getElementById("missingConfirmation");
-        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
         var hotPending = document.getElementById("hotPending");
         var siteSpecifics = document.getElementById("siteSpecifics");
         var nullDateInstallation = document.getElementById("nullDateInstallation");
+        var onHold = document.getElementById("onHold");
+        var pendingToInstall = document.getElementById("pendingToInstall");
+        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
+
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
         missingConfirmation.classList.add("hide");
-        stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+
         } else {
         x.classList.add("hide");
         missingConfirmation.classList.add("hide");
-        stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         }
     }
     function stpeNoOrdered() {
@@ -639,6 +666,8 @@
         var hotPending = document.getElementById("hotPending");
         var siteSpecifics = document.getElementById("siteSpecifics");
         var nullDateInstallation = document.getElementById("nullDateInstallation");
+        var onHold = document.getElementById("onHold");
+        var pendingToInstall = document.getElementById("pendingToInstall");
 
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
@@ -647,6 +676,8 @@
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         } else {
         x.classList.add("hide");
         missingConfirmation.classList.add("hide");
@@ -663,6 +694,8 @@
         var stpeNoOrdered = document.getElementById("stpeNoOrdered");
         var siteSpecifics = document.getElementById("siteSpecifics");
         var nullDateInstallation = document.getElementById("nullDateInstallation");
+        var onHold = document.getElementById("onHold");
+        var pendingToInstall = document.getElementById("pendingToInstall");
 
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
@@ -671,6 +704,8 @@
         stpeNoOrdered.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         } else {
         x.classList.add("hide");
         missingConfirmation.classList.add("hide");
@@ -678,6 +713,8 @@
         stpeNoOrdered.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         }
     }
     function siteSpecifics() {
@@ -686,18 +723,27 @@
         var nullManufacturer = document.getElementById("nullManufacturer");
         var stpeNoOrdered = document.getElementById("stpeNoOrdered");
         var hotPending = document.getElementById("hotPending");
+        var nullDateInstallation = document.getElementById("nullDateInstallation");
+        var onHold = document.getElementById("onHold");
+        var pendingToInstall = document.getElementById("pendingToInstall");
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
         missingConfirmation.classList.add("hide");
         nullManufacturer.classList.add("hide");
         stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         } else {
         x.classList.add("hide");
         missingConfirmation.classList.add("hide");
         nullManufacturer.classList.add("hide");
         stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         }
     }
     function onHold() {
@@ -708,6 +754,7 @@
         var hotPending = document.getElementById("hotPending");
         var siteSpecifics = document.getElementById("siteSpecifics");
         var nullDateInstallation = document.getElementById("nullDateInstallation");
+        var pendingToInstall = document.getElementById("pendingToInstall");
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
         missingConfirmation.classList.add("hide");
@@ -716,6 +763,7 @@
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         } else {
         x.classList.add("hide");
         missingConfirmation.classList.add("hide");
@@ -724,8 +772,40 @@
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        pendingToInstall.classList.add("hide");
         }
 
+    }
+
+    function pendingToInstall() {
+        var x = document.getElementById("pendingToInstall");
+        var missingConfirmation = document.getElementById("missingConfirmation");
+        var nullManufacturer = document.getElementById("nullManufacturer");
+        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
+        var hotPending = document.getElementById("hotPending");
+        var siteSpecifics = document.getElementById("siteSpecifics");
+        var nullDateInstallation = document.getElementById("nullDateInstallation");
+        var onHold = document.getElementById("onHold");
+
+        if (x.classList.contains("hide")) {
+        x.classList.remove("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
+        } else {
+        x.classList.add("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
+        }
     }
     </script>
   {% endblock %}
