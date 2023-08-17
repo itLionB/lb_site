@@ -28,8 +28,10 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT i
                 FROM AppBundle:Installation i
-                WHERE i.confirmationAgent is Null'
+                WHERE i.confirmationAgent is Null
+                OR i.confirmationAgent = :status'
             )
+            ->setParameter('status', 'N/A')
             ->getResult();
     }
 
@@ -100,6 +102,30 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
                 'status' => 'Pending Install',
                 'site' => 'Yes'
             ])
+            ->getResult();
+    }
+
+    public function getOnHold()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.installationStatus =:status'
+            )
+            ->setParameter('status', 'Hold')
+            ->getResult();
+    }
+
+    public function getPendingToInstall()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.installationStatus =:status'
+            )
+            ->setParameter('status', 'Pending to Install')
             ->getResult();
     }
 

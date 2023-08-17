@@ -59,6 +59,14 @@ class ListController extends Controller
             ->getRepository('AppBundle:Installation')
             ->getSiteSpecificsNoOrdered();
 
+        $onHold = $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getOnHold();
+        
+        $pendingToInstall = $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getPendingToInstall();
+
         return $this->render('List/Tables/Dashboard.html.twig', array(
             'role' => $roleApp,
             'user' => $user,
@@ -67,7 +75,9 @@ class ListController extends Controller
             'hotPending' => $hotPending,
             'siteSpecifics' => $siteSpecifics,
             'nullDateInstallation' => $nullDateInstallation,
-            'stpeNoOrdered' => $stpeNoOrdered
+            'stpeNoOrdered' => $stpeNoOrdered,
+            'onHold' => $onHold,
+            'pendingToInstall' => $pendingToInstall
         ));
     }
     

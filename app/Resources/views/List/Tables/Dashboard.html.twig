@@ -127,6 +127,21 @@
         #nullDateInstallation.hide {
             opacity: 0;
         }
+
+        #onHold {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        #onHold.hide {
+            opacity: 0;
+        }
+        
+        .center-itm{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         
         
     </style>
@@ -146,7 +161,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container ">
         <center><h1>Dashboard</h1></center>
         <div class="container bootstrap snippet">
             <div class="row">
@@ -216,6 +231,26 @@
                         <div class="circle-tile-content green-s">
                             <div class="circle-tile-description text-faded">Hot Installations</div>
                             <div class="circle-tile-number text-faded ">{{ hotPending|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-sm-6" onclick="onHold()">
+                    <div class="circle-tile ">
+                        <div class="circle-tile-content gray">
+                            <div class="circle-tile-description text-faded">On Hold</div>
+                            <div class="circle-tile-number text-faded ">{{ onHold|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-sm-6" onclick="()">
+                    <div class="circle-tile ">
+                        <div class="circle-tile-content coral">
+                            <div class="circle-tile-description text-faded">Pending Install</div>
+                            <div class="circle-tile-number text-faded ">{{ pendingToInstall|length }}</div>
                             <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info <i class="fa fa-chevron-circle-right"></i></a>
                         </div>
                     </div>
@@ -441,6 +476,78 @@
         </div>
     </div>
 
+    <div class='container hide' id="onHold">
+        <div class="panel panel-default"> 
+            <div class="panel-heading panel-heading-purple">
+                <h3 class="panel-title">On Hold</h3>
+            </div>
+            <div class="panel-body">
+                <center>
+                <table id="datatable" class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Phone</th>
+                            <th scope="col">Added as Lead</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for onHold in onHold %}
+                        <tr>
+                        <th scope="row">{{ onHold.customerName }}</th>
+                        <th scope="row">{{ onHold.customerPhone }}</th>
+                        <th scope="row">{{ onHold.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ onHold.registerCreated|date("m/d/Y") }}</th>
+                        <td>
+                            <a href="{{ path("info_installation", {"id": onHold.id}) }}" class="btn btn-success">View more information</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </center>
+            </div>
+        </div>
+    </div> 
+
+    <div class='container hide' id="stpeNoOrdered">
+        <div class="panel panel-default"> 
+            <div class="panel-heading panel-heading-purple">
+                <h3 class="panel-title">Pending to Install</h3>
+            </div>
+            <div class="panel-body">
+                <center>
+                <table id="datatable" class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer Phone</th>
+                            <th scope="col">Added as Lead</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for stpeNoOrdered in stpeNoOrdered %}
+                        <tr>
+                        <th scope="row">{{ stpeNoOrdered.customerName }}</th>
+                        <th scope="row">{{ stpeNoOrdered.customerPhone }}</th>
+                        <th scope="row">{{ stpeNoOrdered.addedLead|date("m/d/Y") }}</th>
+                        <th scope="row">{{ stpeNoOrdered.registerCreated|date("m/d/Y") }}</th>
+                        <td>
+                            <a href="{{ path("info_installation", {"id": stpeNoOrdered.id}) }}" class="btn btn-success">View more information</a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </center>
+            </div>
+        </div>
+    </div> 
+
 
 
 
@@ -454,18 +561,25 @@
         var stpeNoOrdered = document.getElementById("stpeNoOrdered");
         var hotPending = document.getElementById("hotPending");
         var siteSpecifics = document.getElementById("siteSpecifics");
+        var missingConfirmation = document.getElementById("missingConfirmation");
+        var onHold = document.getElementById("onHold");
+
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
         nullManufacturer.classList.add("hide");
         stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        missingConfirmation.classList.add("hide");
+        onHold.classList.add("hide");
         } else {
         x.classList.add("hide");
         nullManufacturer.classList.add("hide");
         stpeNoOrdered.classList.add("hide");
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
+        missingConfirmation.classList.add("hide");
+        onHold.classList.add("hide");
         }
     }
         function missingConfirmation() {
@@ -475,6 +589,7 @@
         var hotPending = document.getElementById("hotPending");
         var siteSpecifics = document.getElementById("siteSpecifics");
         var nullDateInstallation = document.getElementById("nullDateInstallation");
+        var onHold = document.getElementById("onHold");
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
         nullManufacturer.classList.add("hide");
@@ -482,6 +597,7 @@
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
         } else {
         x.classList.add("hide");
         nullManufacturer.classList.add("hide");
@@ -489,7 +605,9 @@
         hotPending.classList.add("hide");
         siteSpecifics.classList.add("hide");
         nullDateInstallation.classList.add("hide");
+        onHold.classList.add("hide");
         }
+        console.log("Fuck Checo");
     }
     function nullManufacturer() {
         var x = document.getElementById("nullManufacturer");
@@ -582,13 +700,32 @@
         hotPending.classList.add("hide");
         }
     }
-    function hd1() {
-        var x = document.getElementById("dv1");
+    function onHold() {
+        var x = document.getElementById("onHold");
+        var missingConfirmation = document.getElementById("missingConfirmation");
+        var nullManufacturer = document.getElementById("nullManufacturer");
+        var stpeNoOrdered = document.getElementById("stpeNoOrdered");
+        var hotPending = document.getElementById("hotPending");
+        var siteSpecifics = document.getElementById("siteSpecifics");
+        var nullDateInstallation = document.getElementById("nullDateInstallation");
         if (x.classList.contains("hide")) {
         x.classList.remove("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         } else {
         x.classList.add("hide");
+        missingConfirmation.classList.add("hide");
+        nullManufacturer.classList.add("hide");
+        stpeNoOrdered.classList.add("hide");
+        hotPending.classList.add("hide");
+        siteSpecifics.classList.add("hide");
+        nullDateInstallation.classList.add("hide");
         }
+
     }
     </script>
   {% endblock %}
