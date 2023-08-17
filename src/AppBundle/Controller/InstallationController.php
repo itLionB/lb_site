@@ -1164,6 +1164,7 @@ class InstallationController extends Controller
         $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
 
         $installation->setInstallationStatus('Pending');
+        $installation->setInstallationDateSet('No');
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($installation);
