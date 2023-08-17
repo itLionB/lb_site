@@ -322,16 +322,18 @@ class InstallationController extends Controller
         
         $form= $this->createFormBuilder($installation)
                 ->add('buildingPiTaxes', NumberType::class, array(
+                    'label' => 'Price with No Taxes',
                     'attr' => array(
                         'class' => 'form-control',
-                        'placeholder' => 'Price With Taxes'
+                        'placeholder' => 'Building PI Taxes'
                         )
                     )
                 )
                 ->add('priceNtax', NumberType::class, array(
+                    'label' => 'Price without Taxes',
                     'attr' => array(
                         'class' => 'form-control',
-                        'placeholder' => 'Price with No Taxes'
+                        'label' => 'Price without Taxes',
                         )
                     )
                 )
