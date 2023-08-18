@@ -129,4 +129,10 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function getDelayed()
+    {
+        
+            
+    }
+
 }

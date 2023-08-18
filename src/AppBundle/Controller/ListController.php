@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Installation;
-
 class ListController extends Controller
 {
 
@@ -67,6 +66,8 @@ class ListController extends Controller
             ->getRepository('AppBundle:Installation')
             ->getPendingToInstall();
 
+        
+
         return $this->render('List/Tables/Dashboard.html.twig', array(
             'role' => $roleApp,
             'user' => $user,
@@ -77,8 +78,9 @@ class ListController extends Controller
             'nullDateInstallation' => $nullDateInstallation,
             'stpeNoOrdered' => $stpeNoOrdered,
             'onHold' => $onHold,
-            'pendingToInstall' => $pendingToInstall
-        ));
+            'pendingToInstall' => $pendingToInstall        
+            )
+        );
     }
     
     

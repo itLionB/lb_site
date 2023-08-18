@@ -144,6 +144,18 @@ class InstallationController extends Controller
         $user = $this->getUser()->getUserName();
         $roleApp = $this->getUser()->getRoleApp();
         $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+        
+        $intervalInstallation = $installation->getDpDate()->diff(new \DateTime('now'));
+        $nInstallation = $intervalInstallation->days;
+
+        $intervalCustomer = $installation->getAddedLead()->diff($installation->getContractSigned());
+        $nCustomer = $intervalCustomer->days;
+
+        $em = $this->getDoctrine()->getManager();
+        $installation->setDaysInstall($nInstallation);
+        $installation->setDaysCustomer($nCustomer);
+        $em->persist($installation);
+        $em->flush();
 
         return $this->render('Installation/Tables/Info.html.twig',[
             'installation' => $installation,
@@ -151,7 +163,8 @@ class InstallationController extends Controller
             'layout' => $layout,
             'role' => $userRole,
             'user' => $user,
-            'roleApp' => $roleApp
+            'roleApp' => $roleApp,
+            'nInstallation' => $nInstallation
             ]
         );
     }
