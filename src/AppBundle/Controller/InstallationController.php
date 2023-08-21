@@ -144,18 +144,31 @@ class InstallationController extends Controller
         $user = $this->getUser()->getUserName();
         $roleApp = $this->getUser()->getRoleApp();
         $layout = $this->getDoctrine()->getRepository('AppBundle:Layout')->findLayout($installation->getId());
+
+        if ($installation->getDpDate() == NULL ) {
+            $nInstallation = 0;
+        }else {
+            $intervalInstallation = $installation->getDpDate()->diff(new \DateTime('now'));
+            $nInstallation = $intervalInstallation->days;
+
+            $em = $this->getDoctrine()->getManager();
+            $installation->setDaysInstall($nInstallation);
+            $em->persist($installation);
+            $em->flush();
+        }
+        if ($installation->getContractSigned() == NULL && $installation->getAddedLead() == NULL) {
+            $nCustomer = 0;
+        }else {
+            $intervalCustomer = $installation->getAddedLead()->diff($installation->getContractSigned());
+            $nCustomer = $intervalCustomer->days;
+
+            $em = $this->getDoctrine()->getManager();
+            $installation->setDaysCustomer($nCustomer);
+            $em->persist($installation);
+            $em->flush();
+        }
         
-        $intervalInstallation = $installation->getDpDate()->diff(new \DateTime('now'));
-        $nInstallation = $intervalInstallation->days;
-
-        $intervalCustomer = $installation->getAddedLead()->diff($installation->getContractSigned());
-        $nCustomer = $intervalCustomer->days;
-
-        $em = $this->getDoctrine()->getManager();
-        $installation->setDaysInstall($nInstallation);
-        $installation->setDaysCustomer($nCustomer);
-        $em->persist($installation);
-        $em->flush();
+        
 
         return $this->render('Installation/Tables/Info.html.twig',[
             'installation' => $installation,
