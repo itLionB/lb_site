@@ -845,6 +845,18 @@ class InstallationController extends Controller
                     )
                 )
             )
+            ->add('installationDateSet', ChoiceType::class, array(
+                'label' => 'Does it have installation Date?',
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Yes' => 'Yes',
+                    'No' => 'No',
+                    ),
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
             ->add('save', SubmitType::class,
                 array(
                     'label' => 'Edit Manufacturer Info',
@@ -948,6 +960,18 @@ class InstallationController extends Controller
                     )
                 )
             )
+            ->add('installationDateSet', ChoiceType::class, array(
+                'label' => 'Does it have installation Date?',
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Yes' => 'Yes',
+                    'No' => 'No',
+                    ),
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
             ->add('save', SubmitType::class,
                 array(
                     'label' => 'Edit Manufacturer Info',
@@ -996,7 +1020,7 @@ class InstallationController extends Controller
             return $this->redirectToRoute('show_dashboard');
         }
 
-        return $this->render('Installation/Forms/EditInfo.html.twig', array(
+        return $this->render('Installation/Forms/EditManuDash.html.twig', array(
             'form' => $form->createView(),
             'installation' => $installation
         ));
