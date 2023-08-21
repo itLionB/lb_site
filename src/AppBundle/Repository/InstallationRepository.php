@@ -28,10 +28,10 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT i
                 FROM AppBundle:Installation i
-                WHERE i.confirmationAgent is Null
-                OR i.confirmationAgent = :status'
+                WHERE i.confirmationDateSet = :status
+                OR i.confirmationDateSet is Null'   
             )
-            ->setParameter('status', 'N/A')
+            ->setParameter('status', 'No')
             ->getResult();
     }
 

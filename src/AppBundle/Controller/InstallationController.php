@@ -720,6 +720,18 @@ class InstallationController extends Controller
                     )
                 )
             )
+            ->add('confirmationDateSet', ChoiceType::class, array(
+                'label' => 'Does it have Confirmation Date?',
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Yes' => 'Yes',
+                    'No' => 'No'
+                    ),
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
             ->add('confirmationAgent', EntityType::class, array(
                 'class' => 'AppBundle:Agent',
                 'choice_label' => 'name',
@@ -796,6 +808,118 @@ class InstallationController extends Controller
         }
 
         return $this->render('Installation/Forms/EditInfo.html.twig', array(
+            'form' => $form->createView(),
+            'installation' => $installation
+        ));
+    }
+
+    public function editChangesInfoDashAction(Request $request, $id)
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        $form = $this->createFormBuilder($installation)
+            ->add('anyChanges', ChoiceType::class, array(
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Yes' => 'Yes',
+                    'No' => 'No'
+                    ),
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('orderConfirmation',DateType::class, array(
+                'widget' => 'choice',
+                'attr' => array(
+                    'class' => 'form-control datepicker',
+                    'id' => 'datetimepicker1'
+                    )
+                )
+            )
+            ->add('confirmationDateSet', ChoiceType::class, array(
+                'label' => 'Does it have Confirmation Date?',
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Yes' => 'Yes',
+                    'No' => 'No'
+                    ),
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('confirmationAgent', EntityType::class, array(
+                'class' => 'AppBundle:Agent',
+                'choice_label' => 'name',
+                'data' => $installation->getConfirmationAgent(),
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('siteSpecifics', ChoiceType::class, array(
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Yes' => 'Yes',
+                    'No' => 'No'
+                    ),
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('stepOrdered', ChoiceType::class, array(
+                'label' => 'Site Especific Ordered?',
+                'choices' => array(
+                    'Select an Option' => null,
+                    'Yes' => 'Yes',
+                    'No' => 'No'
+                    ),
+                'attr' => array(
+                    'class' => 'form-control',
+                    )
+                )
+            )
+            ->add('save', SubmitType::class,
+                array(
+                    'label' => 'Edit Changes Info',
+                    'attr' => array(
+                        'class' => 'btn btn-success mt-3 pull-right'
+                        )
+                    )
+                )
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $installation = $form->getData();
+
+            $modification = new Modification();
+
+            $modification->setUserId($this->getUser()->getUserName());
+            $modification->setPlaceChanged('Changes Info');
+            $modification->setModificationDate(new \DateTime('now'));
+            $modification->setInstallationId($installation->getId());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($installation);
+            $em->flush();
+
+            $em->persist($modification);
+            $em->flush();
+
+
+            $modifications = $this->getDoctrine()->getRepository('AppBundle:Modification')->getModificationsByInstallationId($installation->getId());
+            $userRole = $this->getUser()->getRoleApp();
+            $user = $this->getUser()->getUserName();
+
+            return $this->redirectToRoute('show_dashboard');
+
+        }
+
+        return $this->render('Installation/Forms/EditInfoChangeDash.html.twig', array(
             'form' => $form->createView(),
             'installation' => $installation
         ));

@@ -312,7 +312,7 @@
                         <th scope="row">{{ installation.addedLead|date("m/d/Y") }}</th>
                         <th scope="row">{{ installation.registerCreated|date("m/d/Y") }}</th>
                         <td>
-                            <a href="{{ path("edit_changes_info", {"id": installation.id}) }}" class="btn btn-success">Add Missing Confirmation</a>
+                            <a href="{{ path("edit_changes_info_dash", {"id": installation.id}) }}" class="btn btn-success">Add Missing Confirmation</a>
                         </td>
                         </tr>
                     {% endfor %}

@@ -109,6 +109,10 @@ edit_changes_info:
     path: /edit_changes_info/{id}
     defaults: { _controller: AppBundle:Installation:editChangesInfo }
 
+edit_changes_info_dash:
+    path: /edit_changes_info_dash/{id}
+    defaults: { _controller: AppBundle:Installation:editChangesInfoDash }
+
 edit_manufacturer_info:
     path: /edit_manufacturer_info/{id}
     defaults: { _controller: AppBundle:Installation:editManufacturerInfo }
