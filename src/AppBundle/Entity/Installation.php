@@ -388,6 +388,13 @@ class Installation
      */
     private $installationDateSet;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="confirmation_date_set", type="string", nullable=true)
+     */
+    private $confirmationDateSet;
+
     /**
      * Get id
      *
@@ -1644,5 +1651,29 @@ class Installation
     public function getInstallationDateSet()
     {
         return $this->installationDateSet;
+    }
+
+    /**
+     * Set confirmationDateSet
+     *
+     * @param string $confirmationDateSet
+     *
+     * @return Installation
+     */
+    public function setConfirmationDateSet($confirmationDateSet)
+    {
+        $this->confirmationDateSet = $confirmationDateSet;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationDateSet
+     *
+     * @return string
+     */
+    public function getConfirmationDateSet()
+    {
+        return $this->confirmationDateSet;
     }
 }
