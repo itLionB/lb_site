@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Installation;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class ListController extends Controller
 {
 
@@ -30,7 +33,7 @@ class ListController extends Controller
         ));
     }
 
-    public function showDashboardAction()
+    public function showDashboardAction(Request $request)
     {
         $user = $this->getUser()->getUserName();
         $roleApp = $this->getUser()->getRoleApp();
@@ -66,6 +69,47 @@ class ListController extends Controller
             ->getRepository('AppBundle:Installation')
             ->getPendingToInstall();
 
+        $newInstallation = new Installation();
+        
+        $formFilterManufacturer = $this->createFormBuilder($newInstallation)
+            ->add('installationCompany', EntityType::class, array(
+                'label' => 'Manufacturer',
+                'class' => 'AppBundle:Manufacturer',
+                'choice_label' => 'name',
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('save', SubmitType::class, array(
+                'label' => 'Search by Manufacturer',
+                )
+            )
+            ->getForm();
+
+        $formFilterManufacturer->handleRequest($request);
+                
+        if ($formFilterManufacturer->isSubmitted() && $formFilterManufacturer->isValid()) {
+            $installationCompany = $formFilterManufacturer->getData()->getInstallationCompany();
+            $installations = $this->getDoctrine()
+                ->getRepository('AppBundle:Installation')
+                ->findByInstallationCompany($installationCompany);
+            
+            return $this->render('List/Tables/ByManufacturer.html.twig', array(
+                'role' => $roleApp,
+                'user' => $user,
+                'installation' => $installations,
+                'nullManufacturer' => $nullManufacturer,
+                'hotPending' => $hotPending,
+                'siteSpecifics' => $siteSpecifics,
+                'nullDateInstallation' => $nullDateInstallation,
+                'stpeNoOrdered' => $stpeNoOrdered,
+                'onHold' => $onHold,
+                'pendingToInstall' => $pendingToInstall,
+                'formFilterManufacturer' => $formFilterManufacturer->createView()        
+                )
+            );
+        }
         
 
         return $this->render('List/Tables/Dashboard.html.twig', array(
@@ -78,7 +122,8 @@ class ListController extends Controller
             'nullDateInstallation' => $nullDateInstallation,
             'stpeNoOrdered' => $stpeNoOrdered,
             'onHold' => $onHold,
-            'pendingToInstall' => $pendingToInstall        
+            'pendingToInstall' => $pendingToInstall,
+            'formFilterManufacturer' => $formFilterManufacturer->createView()        
             )
         );
     }

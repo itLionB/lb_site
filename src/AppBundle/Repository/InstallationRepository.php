@@ -135,4 +135,15 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             
     }
 
+    public function findInstManufacturer($data)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.installationCompany =:manufacturer'
+            )
+            ->setParameter('manufacturer', $data)
+            ->getResult();
+    }
 }

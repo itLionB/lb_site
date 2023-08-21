@@ -138,11 +138,9 @@
         </div> 
 
         <div class="panel panel-default ">
-          {% if installation.anyChanges == 'No' or installation.anyChanges == null  %}
             {% if role == 'SuperAdmin' or role == 'Admin' %}
             <a href="{{ path('edit_manufacturer_info', {'id': installation.id}) }}" class="btn btn-warning glyphicon glyphicon-pencil pull-right"></a>
             {% endif %}
-          {% endif %} 
           <div class="panel-heading panel-heading-brown">
             <h3 class="panel-title">Manufacturer details</h3>
           </div>
