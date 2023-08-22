@@ -161,3 +161,7 @@ change_status_pending_install:
     path: /change_status_pending_install/{id}
     defaults: { _controller: AppBundle:Installation:changeStatusPendingInstall }
 
+
+filter_by_manufacturer:
+    path: /filter_by_manufacturer
+    defaults: { _controller: AppBundle:List:filterByManufacturer }

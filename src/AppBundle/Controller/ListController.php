@@ -69,49 +69,6 @@ class ListController extends Controller
             ->getRepository('AppBundle:Installation')
             ->getPendingToInstall();
 
-        $newInstallation = new Installation();
-        
-        $formFilterManufacturer = $this->createFormBuilder($newInstallation)
-            ->add('installationCompany', EntityType::class, array(
-                'label' => 'Manufacturer',
-                'class' => 'AppBundle:Manufacturer',
-                'choice_label' => 'name',
-                'attr' => array(
-                    'class' => 'form-control'
-                    )
-                )
-            )
-            ->add('save', SubmitType::class, array(
-                'label' => 'Search by Manufacturer',
-                )
-            )
-            ->getForm();
-
-        $formFilterManufacturer->handleRequest($request);
-                
-        if ($formFilterManufacturer->isSubmitted() && $formFilterManufacturer->isValid()) {
-            $installationCompany = $formFilterManufacturer->getData()->getInstallationCompany();
-            $installations = $this->getDoctrine()
-                ->getRepository('AppBundle:Installation')
-                ->findByInstallationCompany($installationCompany);
-            
-            return $this->render('List/Tables/ByManufacturer.html.twig', array(
-                'role' => $roleApp,
-                'user' => $user,
-                'installation' => $installations,
-                'nullManufacturer' => $nullManufacturer,
-                'hotPending' => $hotPending,
-                'siteSpecifics' => $siteSpecifics,
-                'nullDateInstallation' => $nullDateInstallation,
-                'stpeNoOrdered' => $stpeNoOrdered,
-                'onHold' => $onHold,
-                'pendingToInstall' => $pendingToInstall,
-                'formFilterManufacturer' => $formFilterManufacturer->createView()        
-                )
-            );
-        }
-        
-
         return $this->render('List/Tables/Dashboard.html.twig', array(
             'role' => $roleApp,
             'user' => $user,
@@ -122,10 +79,56 @@ class ListController extends Controller
             'nullDateInstallation' => $nullDateInstallation,
             'stpeNoOrdered' => $stpeNoOrdered,
             'onHold' => $onHold,
-            'pendingToInstall' => $pendingToInstall,
-            'formFilterManufacturer' => $formFilterManufacturer->createView()        
+            'pendingToInstall' => $pendingToInstall,    
             )
         );
+    }
+
+    public function filterByManufacturerAction(Request $request)
+    {
+        $user = $this->getUser()->getUserName();
+        $roleApp = $this->getUser()->getRoleApp();
+        $installation = new Installation();
+        $form = $this->createFormBuilder($installation)
+            ->add('installationCompany', EntityType::class, array(
+                'class' => 'AppBundle:Manufacturer',
+                'choice_label' => 'name',
+                'attr' => array(
+                    'class' => 'form-control'
+                    )
+                )
+            )
+            ->add('save', SubmitType::class, array(
+                'label' => 'Filter',
+                'attr' => array(
+                    'class' => 'btn btn-primary pull-right'
+                )
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manufacturer = $this->getDoctrine()->getRepository('AppBundle:Manufacturer')->find($installation->getInstallationCompany());
+            $manufacturerName = $manufacturer->getName();
+
+            $installations = $this->getDoctrine()
+                ->getRepository('AppBundle:Installation')
+                ->findInstManufacturer($manufacturerName);
+
+            return $this->render('List/Tables/FilterByManufacturerList.html.twig', array(
+                'installation' => $installations,
+                'role' => $roleApp,
+                'user' => $user
+            ));
+        }
+
+        return $this->render('List/Tables/ByManufacturer.html.twig', array(
+            'form' => $form->createView(),
+            'role' => $roleApp,
+            'user' => $user
+        ));
     }
     
     
