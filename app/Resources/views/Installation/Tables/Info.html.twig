@@ -4,6 +4,12 @@
 {% block title %}Installation{% endblock %}
 
 {% block body %}
+  <style>
+    body{
+      background: rgb(54,54,54);
+background: linear-gradient(0deg, rgba(54,54,54,1) 0%, rgba(255,255,255,1) 100%);
+      }
+  </style>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('home') }}">Lion Buildings</a>
@@ -91,8 +97,6 @@
               <li class = "list-group-item">Financed: <h4> {{installation.financed}}</h4></li>
               <li class = "list-group-item">Financing Company: <h4> {{installation.financingCompany}}</h4></li>
               <li class = "list-group-item">Other: <h4> {{installation.financingOther}}</h4></li>
-              
-
             </ul>
           </div>
         </div>
