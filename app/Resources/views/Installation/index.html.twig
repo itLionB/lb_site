@@ -26,9 +26,12 @@
           {% if role == 'SuperAdmin' or role == 'Admin' %}
             <li><a href="{{ path('catalog') }}">Catalogs</a></li>
             <li class=""><a href="{{ path('installation') }}">Installation</a></li>
+            <li><a href="{{ path('list') }}">Lists</a></li>
+            <li><a href="{{ path('show_dashboard') }}">Dashboard</a></li>
           {% endif %}
-          <li><a href="{{ path('list') }}">Lists</a></li>
-          <li><a href="{{ path('show_dashboard') }}">Dashboard</a></li>
+          {% if role == 'Viewer' %}
+            <li class=""><a href="{{ path('installation') }}">Installation</a></li>
+          {% endif %}
         </ul>
         <a class="btn btn-danger navbar-btn pull-right" href="{{ logout_path('main') }}">close sesion</a>  
       <span class="pull-right li-user glyphicon glyphicon-user"> {{ user }}</span>  
@@ -36,7 +39,9 @@
   </nav>
 
   <div class='container'>
+    {% if role == 'SuperAdmin' or role == 'Admin' %}
     <a class="btn btn-success pull-right glyphicon glyphicon-plus" href="{{ path('add_installation') }}" data-toggle="tooltip" data-placement="top" title="Hooray!"></a><br><br>
+    {% endif %}
     <div class="panel panel-primary "> 
       <div class="panel-heading ">
         <h3 class="panel-title">Installations</h3>
