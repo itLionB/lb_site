@@ -39,9 +39,21 @@
   </nav>
 
   <div class='container'>
-    {% if role == 'SuperAdmin' or role == 'Admin' %}
-    <a class="btn btn-success pull-right glyphicon glyphicon-plus" href="{{ path('add_installation') }}" data-toggle="tooltip" data-placement="top" title="Hooray!"></a><br><br>
-    {% endif %}
+    <div class='container'>
+      <div class="row">
+        <div class="col-sm-10" style="">
+          <a class="btn btn-warning pull-right" href="" data-toggle="tooltip" data-placement="top" title="Hooray!"> Filter Installations</a><br><br>
+        </div>
+        <div class="col-sm-2" style="">
+          {% if role == 'SuperAdmin' or role == 'Admin' %}
+            <a class="btn btn-success pull-right glyphicon glyphicon-plus" href="{{ path('add_installation') }}" data-toggle="tooltip" data-placement="top" title="Hooray!"></a><br><br>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>  
+    
+  <div class='container'>
     <div class="panel panel-primary "> 
       <div class="panel-heading ">
         <h3 class="panel-title">Installations</h3>
@@ -53,8 +65,10 @@
                   <tr>
                     <th scope="col">Customer Name</th>
                     <th scope="col">Customer Phone</th>
-                    <th scope="col">Added as Lead</th>
-                    <th scope="col">Created On</th>
+                    <th scope="col">Sales Owner</th>
+                    <th scope="col">Sales Caller</th>
+                    <th scope="col">Manufacturer</th>
+                    <th scope="col">Installation Status</th>
                     <th scope="col">Actions</th>
                   </tr>
               </thead>
@@ -63,8 +77,10 @@
                 <tr>
                   <th scope="row">{{ installation.customerName }}</th>
                   <th scope="row">{{ installation.customerPhone }}</th>
-                  <th scope="row">{{ installation.addedLead|date("m/d/Y") }}</th>
-                  <th scope="row">{{ installation.registerCreated|date("m/d/Y") }}</th>
+                  <th scope="row">{{ installation.salesOwner }}</th>
+                  <th scope="row">{{ installation.salesCaller }}</th>
+                  <th scope="row">{{ installation.installationCompany }}
+                  <th scope="row">{{ installation.installationStatus }}</th>
                   <td>
                     <a href="{{ path("info_installation", {"id": installation.id}) }}" class="btn btn-success">View more information</a>
                   </td>

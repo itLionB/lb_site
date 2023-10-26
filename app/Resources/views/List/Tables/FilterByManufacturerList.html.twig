@@ -16,8 +16,40 @@
   <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
   <style type="text/css">
       body {
-  background: rgb(230,230,230);
-background: linear-gradient(90deg, rgba(230,230,230,1) 0%, rgba(0,236,255,1) 0%, rgba(139,74,168,1) 25%, rgba(90,77,255,1) 50%, rgba(137,77,170,1) 75%, rgba(0,255,226,1) 100%);      
+        background: rgb(230,230,230);
+        background: linear-gradient(90deg, rgba(230,230,230,1) 0%, rgba(0,236,255,1) 0%, rgba(139,74,168,1) 25%, rgba(90,77,255,1) 50%, rgba(137,77,170,1) 75%, rgba(0,255,226,1) 100%);      
+        
+      }
+      .center-items{
+        align-items: center;
+      }
+      .panel-default > .panel-heading-lightgreen {
+                background: rgb(215, 215, 100);
+                color: #fff;
+            }
+        .panel-default > .panel-heading-red {
+                background: #E74C3C; 
+                color: #fff;
+        }
+        .panel-default > .panel-heading-green {
+            background: green;
+            color: #fff;
+        }
+        .panel-default > .panel-heading-lightgreen {
+            background: rgb(215, 215, 100);
+            color: #fff;
+        }
+        .panel-default > .panel-heading-blue {
+            background: rgb(0, 57, 230);
+            color: #fff;
+        }
+        .panel-default > .panel-heading-yellow {
+            background-color: #F1C40F;
+            color: #fff;
+        }
+        .panel-default > .panel-heading-gray {
+            background-color: gray;
+            color: #fff;
         }
   </style>
   <nav class="navbar navbar-inverse">
@@ -36,31 +68,216 @@ background: linear-gradient(90deg, rgba(230,230,230,1) 0%, rgba(0,236,255,1) 0%,
     </div>
   </nav>
 
+  <div class="container">
+    <center><h1 style="color:white;">Status by Manufacturer</h1></center>  
+    <div class="container bootstrap snippet">
+      <div class="row">
+
+        <div class=" col-sm-3" onclick="missingConfirmation()">
+          <div class="circle-tile ">
+            <div class="circle-tile-content green">
+                <div class="circle-tile-description text-faded"> 
+                  <h3>Installed </h3> <br> 
+                  <h1><span class="glyphicon glyphicon-ok"></span></h1>  
+                </div>
+                <div class="circle-tile-number text-faded ">{{ installed|length }}</div>
+                <a class="circle-tile-footer"  class="btn btn-info btn-lg" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class=" col-sm-3" onclick="missingConfirmation()">
+          <div class="circle-tile ">
+            <div class="circle-tile-content orange">
+                <div class="circle-tile-description text-faded"> 
+                  <h3> Pending </h3> <br>
+                  <h1><span class="glyphicon glyphicon-paperclip"></span></h1>  
+                </div>
+                <div class="circle-tile-number text-faded ">{{ pending|length }}</div>
+                <a class="circle-tile-footer"  class="btn btn-info btn-lg" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class=" col-sm-3" onclick="missingConfirmation()">
+          <div class="circle-tile ">
+            <div class="circle-tile-content red">
+                <div class="circle-tile-description text-faded"> 
+                  <h3>  Cancelled </h3> <br>
+                  <h1><span class="glyphicon glyphicon-remove"></span></h1>  
+                </div>
+                <div class="circle-tile-number text-faded ">{{ cancelled|length }}</div>
+                <a class="circle-tile-footer"  class="btn btn-info btn-lg" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" onclick="missingConfirmation()">
+          <div class="circle-tile ">
+            <div class="circle-tile-content gray">
+                <div class="circle-tile-description text-faded"> 
+                  <h3>  Repairs </h3> <br>
+                  <h1><span class="glyphicon glyphicon-wrench"></span></h1>  
+                </div>
+                <div class="circle-tile-number text-faded ">No Data</div>
+                <a class="circle-tile-footer"  class="btn btn-info btn-lg" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class='container'>
-    <a class="btn btn-success pull-right glyphicon glyphicon-plus" href="{{ path('add_installation') }}" data-toggle="tooltip" data-placement="top" title="Hooray!"></a><br><br>
-    <div class="panel panel-primary "> 
-      <div class="panel-heading ">
-        <h3 class="panel-title">Installations</h3>
+    <div class="panel panel-default"> 
+      <div class="panel-heading panel-heading-green">
+        <h3 class="panel-title">Installed</h3>
       </div>
       <div class="panel-body">
         <center>
-          <table id="datatable" class="table table-hover">
+          <table class="table table-hover">
               <thead class="thead-dark">
                   <tr>
                     <th scope="col">Customer Name</th>
                     <th scope="col">Customer Phone</th>
-                    <th scope="col">Created On</th>
+                    <th scope="col">Sales Owner</th>
+                    <th scope="col">Sales Caller</th>
+                    <th scope="col">Manufacturer</th>
+                    <th scope="col">Installation Status</th>
                     <th scope="col">Actions</th>
                   </tr>
               </thead>
             <tbody>
-              {% for installation in installation %}
+              {% for installed in installed %}
                 <tr>
-                  <th scope="row">{{ installation.customerName }}</th>
-                  <th scope="row">{{ installation.customerPhone }}</th>
-                  <th scope="row">{{ installation.registerCreated|date("m/d/Y") }}</th>
+                  <th scope="row">{{ installed.customerName }}</th>
+                  <th scope="row">{{ installed.customerPhone }}</th>
+                  <th scope="row">{{ installed.salesOwner }}</th>
+                  <th scope="row">{{ installed.salesCaller }}</th>
+                  <th scope="row">{{ installed.installationCompany }}
+                  <th scope="row">{{ installed.installationStatus }}</th>
                   <td>
-                    <a href="{{ path("info_installation", {"id": installation.id}) }}" class="btn btn-success">View more information</a>
+                    <a href="{{ path("info_installation", {"id": installed.id}) }}" class="btn btn-success">View more information</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </center>
+      </div>
+    </div>
+  </div>
+
+  <div class='container'>
+    <div class="panel panel-default"> 
+      <div class="panel-heading panel-heading-yellow">
+        <h3 class="panel-title">Pending</h3>
+      </div>
+      <div class="panel-body">
+        <center>
+          <table class="table table-hover">
+              <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Customer Phone</th>
+                    <th scope="col">Sales Owner</th>
+                    <th scope="col">Sales Caller</th>
+                    <th scope="col">Manufacturer</th>
+                    <th scope="col">Installation Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+              </thead>
+            <tbody>
+              {% for pending in pending %}
+                <tr>
+                  <th scope="row">{{ pending.customerName }}</th>
+                  <th scope="row">{{ pending.customerPhone }}</th>
+                  <th scope="row">{{ pending.salesOwner }}</th>
+                  <th scope="row">{{ pending.salesCaller }}</th>
+                  <th scope="row">{{ pending.installationCompany }}
+                  <th scope="row">{{ pending.installationStatus }}</th>
+                  <td>
+                    <a href="{{ path("info_installation", {"id": pending.id}) }}" class="btn btn-success">View more information</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </center>
+      </div>
+    </div>
+  </div>
+
+<div class='container'>
+    <div class="panel panel-default"> 
+      <div class="panel-heading panel-heading-red">
+        <h3 class="panel-title">Cancelled</h3>
+      </div>
+      <div class="panel-body">
+        <center>
+          <table class="table table-hover">
+              <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Customer Phone</th>
+                    <th scope="col">Sales Owner</th>
+                    <th scope="col">Sales Caller</th>
+                    <th scope="col">Manufacturer</th>
+                    <th scope="col">Installation Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+              </thead>
+            <tbody>
+              {% for cancelled in cancelled %}
+                <tr>
+                  <th scope="row">{{ cancelled.customerName }}</th>
+                  <th scope="row">{{ cancelled.customerPhone }}</th>
+                  <th scope="row">{{ cancelled.salesOwner }}</th>
+                  <th scope="row">{{ cancelled.salesCaller }}</th>
+                  <th scope="row">{{ cancelled.installationCompany }}
+                  <th scope="row">{{ cancelled.installationStatus }}</th>
+                  <td>
+                    <a href="{{ path("info_installation", {"id": cancelled.id}) }}" class="btn btn-success">View more information</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </center>
+      </div>
+    </div>
+  </div>
+
+<div class='container'>
+    <div class="panel panel-default"> 
+      <div class="panel-heading panel-heading-gray">
+        <h3 class="panel-title">Installed</h3>
+      </div>
+      <div class="panel-body">
+        <center>
+          <table class="table table-hover">
+              <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Customer Phone</th>
+                    <th scope="col">Sales Owner</th>
+                    <th scope="col">Sales Caller</th>
+                    <th scope="col">Manufacturer</th>
+                    <th scope="col">Installation Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+              </thead>
+            <tbody>
+              {% for installed in installed %}
+                <tr>
+                  <th scope="row">{{ installed.customerName }}</th>
+                  <th scope="row">{{ installed.customerPhone }}</th>
+                  <th scope="row">{{ installed.salesOwner }}</th>
+                  <th scope="row">{{ installed.salesCaller }}</th>
+                  <th scope="row">{{ installed.installationCompany }}
+                  <th scope="row">{{ installed.installationStatus }}</th>
+                  <td>
+                    <a href="{{ path("info_installation", {"id": installed.id}) }}" class="btn btn-success">View more information</a>
                   </td>
                 </tr>
               {% endfor %}
