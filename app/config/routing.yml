@@ -165,3 +165,17 @@ change_status_pending_install:
 filter_by_manufacturer:
     path: /filter_by_manufacturer
     defaults: { _controller: AppBundle:List:filterByManufacturer }
+
+
+show_sales:
+    path: /show_sales
+    defaults: { _controller: AppBundle:Sales:index }
+
+
+add_owners:
+    path: /add_owners/{id}
+    defaults: { _controller: AppBundle:Installation:addSale }
+
+edit_site_specifics:
+    path: /edit_site_specifics/{id}
+    defaults: { _controller: AppBundle:Installation:editSiteSpecific }

@@ -255,6 +255,13 @@ class InstallationController extends Controller
 
     }
 
+    public function editSiteSpecificAction()
+    {
+        $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);
+
+        
+    }
+
     public function editInstallationInfoAction(Request $request, $id)
     {
         $installation = $this->getDoctrine()->getRepository('AppBundle:Installation')->find($id);

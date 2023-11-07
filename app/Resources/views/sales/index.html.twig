@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style type="text/css">
+        body{
+            background: rgb(0,0,0);
+background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(45,45,167,1) 25%, rgba(0,212,255,1) 50%, rgba(45,45,167,1) 75%, rgba(0,0,0,1) 100%);}
+    </style>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('home') }}">Lion Buildings</a>
+        <ul class="nav navbar-nav">
+          {% if role == 'SuperAdmin' or role == 'Admin' %}
+            <li><a href="{{ path('catalog') }}">Catalogs</a></li>
+            <li class=""><a href="{{ path('installation') }}">Installation</a></li>
+            <li><a href="{{ path('show_dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ path('show_sales') }}">Sales</a></li>
+            <li><a href="{{ path('list') }}">Lists</a></li>
+          {% endif %}
+          {% if role == 'Viewer' %}
+            <li class=""><a href="{{ path('installation') }}">Installation</a></li>
+          {% endif %}
+        </ul>
+        <a class="btn btn-danger navbar-btn pull-right" href="{{ logout_path('main') }}">close sesion</a>  
+      <span class="pull-right li-user glyphicon glyphicon-user"> {{ user }}</span>  
+    </div>
+  </nav>
+
+    <div class="container">
+        <h1 class=""><center>Sales on {{ 'now' | date('M/Y') }}</center></h1>
+    
+    <button type="button" class="btn btn-success btn-lg pull-right" data-toggle="modal" data-target="#myModal">Add Sale</button><br>
+    <br><br>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Form To add</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="panel panel-primary ">
+                        <div class="panel-heading ">
+                            <h3 class="panel-title">Add New Sale</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            {{ form_end(form) }}
+                            <br>
+                        </div>
+                    </div> 
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+<div class='container'>
+    <div class="panel panel-primary "> 
+      <div class="panel-heading ">
+        <h3 class="panel-title">Installations</h3>
+      </div>
+      <div class="panel-body">
+        <center>
+          <table id="datatable" class="table table-hover">
+              <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Caller</th>
+                    <th scope="col">Quoter</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Date</th>
+                  </tr>
+              </thead>
+            <tbody>
+              {% for sale in sale %}
+                <tr>
+                  <th scope="row">{{ sale.name }}</th>
+                  <th scope="row">{{ sale.state }}</th>
+                  <th scope="row">{{ sale.caller }}</th>
+                  <th scope="row">{{ sale.quoter }}</th>
+                  <th scope="row">$ {{ sale.price }}</th>                  
+                  <th scope="row">{{ sale.date|date("m/d/Y") }}</th>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </center>
+      </div>
+    </div>
+  </div>
+
+
+  {% block javascripts %}
+    <script>
+      $(document).ready(function(){
+        $('#datatable').dataTable();
+      });
+    </script>
+  {% endblock %}
+
+
+{% endblock %}

@@ -419,7 +419,7 @@
                         <th scope="row">{{ siteSpecifics.addedLead|date("m/d/Y") }}</th>
                         <th scope="row">{{ siteSpecifics.registerCreated|date("m/d/Y") }}</th>
                         <td>
-                            <a href="{{ path("info_installation", {"id": siteSpecifics.id}) }}" class="btn btn-success">View more information</a>
+                            <a href="{{ path("edit_changes_info", {"id": siteSpecifics.id}) }}" class="btn btn-success">Edit information</a>
                         </td>
                         </tr>
                     {% endfor %}
