@@ -21,6 +21,10 @@
             background: rgb(230,230,230);
             background: linear-gradient(90deg, rgba(230,230,230,1) 0%, rgba(163,163,163,1) 0%, rgba(255,255,255,1) 50%, rgba(147,147,147,1) 100%);
         }
+        .panel-default > .panel-heading-black {
+                background: rgb(215, 215, 100);
+                color: #fff;
+            }
         .panel-default > .panel-heading-lightgreen {
                 background: rgb(215, 215, 100);
                 color: #fff;
@@ -265,6 +269,16 @@
                     <div class="circle-tile ">
                         <div class="circle-tile-content coral">
                             <div class="circle-tile-description text-faded">Only Pending Install</div>
+                            <div class="circle-tile-number text-faded ">{{ pendingToInstall|length }}</div>
+                            <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-sm-6" onclick="pendingToInstall()">
+                    <div class="circle-tile ">
+                        <div class="circle-tile-content black">
+                            <div class="circle-tile-description text-faded">Cancelled</div>
                             <div class="circle-tile-number text-faded ">{{ pendingToInstall|length }}</div>
                             <a class="circle-tile-footer"  class="btn btn-info btn-lg">More Info <i class="fa fa-chevron-circle-right"></i></a>
                         </div>
