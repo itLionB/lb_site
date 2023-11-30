@@ -43,7 +43,8 @@ class SalesController extends Controller
                 )
             )
             ->setParameter('startOfMonth', new \DateTime('first day of this month midnight'))
-            ->setParameter('endOfMonth', new \DateTime('last day of this month 23:59:59'));
+            ->setParameter('endOfMonth', new \DateTime('last day of this month 23:59:59'))
+            ->orderBy('s.date', 'ASC'); // Ordenar de forma ascendente (de menor a mayor fecha)
 
         $query = $qb->getQuery();
         $currentSales = $query->getResult();

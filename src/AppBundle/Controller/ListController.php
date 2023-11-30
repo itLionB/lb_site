@@ -55,6 +55,12 @@ class ListController extends Controller
             ->getRepository('AppBundle:Installation')
             ->getNullDateInstallation();
 
+        foreach ($nullDateInstallation as $key => $installation) {
+            if ($installation->getInstallationStatus() === 'Cancelled') {
+                unset($nullDateInstallation[$key]);
+            }
+        }
+
         $hotPending= $this->getDoctrine()
             ->getRepository('AppBundle:Installation')
             ->getHotPending();
