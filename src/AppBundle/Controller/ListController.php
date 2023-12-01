@@ -76,6 +76,10 @@ class ListController extends Controller
         $pendingToInstall = $this->getDoctrine()
             ->getRepository('AppBundle:Installation')
             ->getPendingToInstall();
+        
+        $cancelledInstallation = $this->getDoctrine()
+            ->getRepository('AppBundle:Installation')
+            ->getCancelled();
 
         return $this->render('List/Tables/Dashboard.html.twig', array(
             'role' => $roleApp,
@@ -87,7 +91,8 @@ class ListController extends Controller
             'nullDateInstallation' => $nullDateInstallation,
             'stpeNoOrdered' => $stpeNoOrdered,
             'onHold' => $onHold,
-            'pendingToInstall' => $pendingToInstall,    
+            'pendingToInstall' => $pendingToInstall,  
+            'cancelledInstallation' => $cancelledInstallation  
             )
         );
     }

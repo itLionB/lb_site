@@ -152,6 +152,18 @@ class InstallationRepository extends \Doctrine\ORM\EntityRepository
             
     }
 
+    public function getCancelled()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT i
+                FROM AppBundle:Installation i
+                WHERE i.installationStatus =:status'
+            )
+            ->setParameter('status', 'Cancelled')
+            ->getResult();
+    }
+
     public function findInstManufacturer($data)
     {
         return $this->getEntityManager()
